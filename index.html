@@ -1135,70 +1135,67 @@
 
 
 
-
-
-      
-      <!-- ENTREVISTAS -->
+      <!-- FORO -->
       <section class="page" id="entrevistas">
         <div class="card">
-          <div class="tagline">Entrevistas · Docentes de antes y de ahora</div>
-          <h2>Voces que enriquecen el tema</h2>
+          <div class="tagline">Foro del módulo</div>
+          <h2>Foro: Medios tradicionales y modos de leer en el siglo XXI</h2>
           <p class="muted">
-            En este espacio se presentan <strong>entrevistas cortas</strong> a docentes del campo y de la ciudad,
-            comparando perspectivas “de antes” y “de ahora” sobre la temática.
+            Responde a la siguiente pregunta y lee los aportes de otras personas que usen este mismo equipo.
+            Las respuestas se guardan únicamente en este navegador (no se envían a un servidor).
+          </p>
+          <p style="margin-top:0.4rem;">
+            <strong>Pregunta del foro:</strong><br>
+            <em>¿Con qué medios tradicionales te identificas y cuál es tu modo de leer actualmente en el siglo XXI?</em>
           </p>
         </div>
-
-        <div class="card two-columns">
-          <div>
-            <h3>Entrevista 1: Docente de campo</h3>
-            <div class="media-box">
-              <!-- Reemplaza por el enlace del video o audio de la entrevista -->
-              <iframe
-                src="https://www.youtube.com/embed/dQw4w9WgXcQ"
-                title="Entrevista docente campo"
-                frameborder="0"
-                allowfullscreen
-              ></iframe>
-            </div>
-            <p class="small">
-              💬 Preguntas sugeridas: ¿Cómo ha cambiado la enseñanza en el campo? ¿Qué desafíos siguen igual?
-            </p>
-          </div>
-          <div>
-            <h3>Entrevista 2: Docente de ciudad</h3>
-            <div class="media-box">
-              <!-- Otra entrevista -->
-              <iframe
-                src="https://www.youtube.com/embed/dQw4w9WgXcQ"
-                title="Entrevista docente ciudad"
-                frameborder="0"
-                allowfullscreen
-              ></iframe>
-            </div>
-            <p class="small">
-              💬 Preguntas sugeridas: ¿Qué oportunidades representan las TIC? ¿Qué desigualdades persisten?
-            </p>
-          </div>
-        </div>
-
+      
         <div class="card">
-          <h3>Actividad: Debate guiado</h3>
+          <h3>Publica tu aporte</h3>
           <p class="muted">
-            A partir de las entrevistas, discutan en grupo y tomen nota de los acuerdos:
+            Escribe tu nombre (o seudónimo) y tu respuesta al foro. Puedes publicar más de una vez si lo deseas.
           </p>
-          <ul>
-            <li>Un aspecto en el que ambas realidades se parecen.</li>
-            <li>Un aspecto en el que son totalmente distintas.</li>
-            <li>Una propuesta concreta para mejorar la educación en ambos contextos.</li>
-          </ul>
-          <textarea
-            class="input"
-            placeholder="Escribe aquí las conclusiones del debate de tu grupo..."
-          ></textarea>
+      
+          <div class="two-columns">
+            <div>
+              <label for="foro-nombre" class="small">Nombre o seudónimo</label>
+              <input
+                id="foro-nombre"
+                class="input"
+                placeholder="Ejemplo: Ana, Grupo Prisma, etc."
+              />
+              <label for="foro-texto" class="small" style="margin-top:0.4rem; display:block;">
+                Tu respuesta
+              </label>
+              <textarea
+                id="foro-texto"
+                class="input"
+                placeholder="Escribe aquí con qué medios tradicionales te identificas y cómo lees actualmente (en papel, en pantalla, audiolibros, redes, etc.)..."
+              ></textarea>
+              <button class="btn btn-secondary" id="foro-publicar" style="margin-top:0.5rem;">
+                Publicar aporte en este equipo
+              </button>
+              <p class="small badge-soft" style="margin-top:0.4rem;">
+                📌 Tus respuestas se guardan solo en este dispositivo mediante almacenamiento local.
+                Si quieres compartirlas con el docente, copia y pégalas en un documento o correo.
+              </p>
+            </div>
+      
+            <div>
+              <h3>Aportes guardados en este equipo</h3>
+              <p class="muted small">
+                Aquí verás los aportes que se han escrito desde este mismo navegador.
+              </p>
+              <div id="foro-respuestas" class="small" style="margin-top:0.4rem; max-height:400px; overflow-y:auto;">
+                <!-- Aquí se renderizan las respuestas -->
+              </div>
+            </div>
+          </div>
         </div>
       </section>
 
+      
+      
       <!-- ACTIVIDADES CREATIVAS -->
       <section class="page" id="actividades">
         <div class="card">
@@ -1606,6 +1603,76 @@
       }
     }
 
+    // Foro (respuestas guardadas en localStorage de este equipo)
+    const foroNombre = document.getElementById("foro-nombre");
+    const foroTexto = document.getElementById("foro-texto");
+    const foroPublicar = document.getElementById("foro-publicar");
+    const foroRespuestas = document.getElementById("foro-respuestas");
+    const FORO_KEY = "foro_respuestas_modulo";
+    
+    let foroData = [];
+    try {
+      const savedForo = localStorage.getItem(FORO_KEY);
+      if (savedForo) {
+        foroData = JSON.parse(savedForo);
+      }
+    } catch (e) {
+      foroData = [];
+    }
+    
+    // Función para renderizar las respuestas del foro
+    function renderForo() {
+      if (!foroRespuestas) return;
+      if (!foroData.length) {
+        foroRespuestas.innerHTML =
+          '<p class="muted small">Aún no hay respuestas guardadas en este equipo. ¡Sé la primera persona en participar!</p>';
+        return;
+      }
+    
+      foroRespuestas.innerHTML = foroData
+        .map((item) => {
+          const fecha = new Date(item.fecha).toLocaleString("es-CO");
+          const nombre = item.nombre || "Anónimo";
+          return `
+            <div style="border:1px solid #1f2937; border-radius:0.6rem; padding:0.4rem 0.6rem; margin-bottom:0.4rem; background:rgba(15,23,42,0.95);">
+              <p style="font-weight:600; font-size:0.8rem;">${nombre}</p>
+              <p style="font-size:0.8rem; color:#e5e7eb; margin:0.2rem 0;">${item.texto}</p>
+              <p style="font-size:0.7rem; color:#9ca3af; margin-top:0.2rem;">${fecha}</p>
+            </div>
+          `;
+        })
+        .join("");
+    }
+    
+    renderForo();
+    
+    // Publicar nueva respuesta
+    if (foroPublicar && foroTexto) {
+      foroPublicar.addEventListener("click", () => {
+        const nombre = (foroNombre?.value || "").trim();
+        const texto = (foroTexto.value || "").trim();
+    
+        if (!texto) {
+          alert("Por favor escribe tu aporte antes de publicarlo.");
+          return;
+        }
+    
+        const nueva = {
+          nombre,
+          texto,
+          fecha: new Date().toISOString(),
+        };
+    
+        foroData.unshift(nueva); // añade al inicio
+        localStorage.setItem(FORO_KEY, JSON.stringify(foroData));
+        foroTexto.value = "";
+        renderForo();
+      });
+    }
+
+
+
+    
     // Marcar módulo como completado
     if (btnModuloCompleto) {
       btnModuloCompleto.addEventListener("click", () => {
@@ -1675,6 +1742,7 @@
   </script>
 </body>
 </html>
+
 
 
 
