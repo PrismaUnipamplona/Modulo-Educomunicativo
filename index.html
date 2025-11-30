@@ -2,7 +2,7 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8" />
-  <title>Módulo Interactivo – Nombre del Tema</title>
+  <title>Módulo Interactivo – Educomunicativo</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <style>
     :root {
@@ -176,6 +176,7 @@
       border: 1px solid #1f2937;
       box-shadow: 0 20px 35px rgba(15, 23, 42, 0.7);
       margin-bottom: 1rem;
+      overflow: visible !important;
     }
 
     .card h2 {
@@ -240,11 +241,12 @@
     }
 
     .media-box {
-      border-radius: 0.8rem;
+      width: 100%;
       overflow: hidden;
+      border-radius: 0.8rem;
       border: 1px solid #1f2937;
       background: #020617;
-      margin: 0.5rem 0;
+      margin-top: 10px;
     }
 
     .media-box iframe,
@@ -254,8 +256,19 @@
       display: block;
     }
 
-    .media-box audio {
+    .media-box.audio {
       padding: 0.4rem 0.6rem;
+    }
+
+    /* Alturas de iframes */
+    .media-box.video iframe {
+      height: 500px;
+      border: 0;
+    }
+
+    .media-box.tall iframe {
+      height: 900px;
+      border: 0;
     }
 
     .two-columns {
@@ -344,32 +357,6 @@
       color: var(--text-soft);
     }
 
-    .quiz-question {
-      margin-bottom: 0.6rem;
-    }
-
-    .quiz-options label {
-      display: flex;
-      align-items: flex-start;
-      gap: 0.35rem;
-      margin-bottom: 0.25rem;
-      font-size: 0.9rem;
-      cursor: pointer;
-    }
-
-    .quiz-result {
-      margin-top: 0.4rem;
-      font-size: 0.9rem;
-    }
-
-    .quiz-result.ok {
-      color: var(--success);
-    }
-
-    .quiz-result.bad {
-      color: var(--danger);
-    }
-
     .badge-soft {
       display: inline-block;
       padding: 0.2rem 0.5rem;
@@ -416,71 +403,38 @@
       margin: 0 auto;
     }
 
+    /* Certificado con imagen */
     .certificate {
       border-radius: 1rem;
       background: radial-gradient(circle at top, #111827, #020617);
       border: 1px solid #1f2937;
-      padding: 1rem 1.2rem;
+      padding: 0.8rem 1rem;
       text-align: center;
       margin-top: 0.6rem;
+    }
+
+    .certificate-inner {
       position: relative;
-      overflow: hidden;
+      max-width: 900px;
+      margin: 0 auto;
     }
 
-    .certificate::before {
-      content: "";
+    .certificate-inner img {
+      width: 100%;
+      display: block;
+      border-radius: 0.75rem;
+    }
+
+    .certificate-name-overlay {
       position: absolute;
-      inset: 0;
-      border-radius: inherit;
-      border: 1px solid rgba(56, 189, 248, 0.25);
-      pointer-events: none;
-    }
-
-    .certificate h2 {
-      font-size: 1.3rem;
-      margin-bottom: 0.3rem;
-    }
-
-    .certificate h3 {
-      margin-top: 0.4rem;
-      margin-bottom: 0.2rem;
-    }
-
-    .certificate-name {
+      left: 50%;
+      top: 57%;          /* ajusta este porcentaje si la línea queda más arriba/abajo */
+      transform: translate(-50%, -50%);
       font-size: 1.1rem;
       font-weight: 600;
-      margin: 0.35rem 0;
-    }
-
-    .certificate-footer {
-      margin-top: 0.6rem;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      font-size: 0.75rem;
-      color: var(--text-soft);
-      gap: 0.5rem;
-      flex-wrap: wrap;
-    }
-
-    .certificate-logos {
-      display: flex;
-      gap: 0.5rem;
-      align-items: center;
-      justify-content: center;
-    }
-
-    .logo-box {
-      width: 48px;
-      height: 48px;
-      border-radius: 0.7rem;
-      border: 1px solid #1f2937;
-      background: #020617;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 0.7rem;
-      color: var(--text-soft);
+      color: #111827;    /* cambia si la línea es oscura/clara */
+      text-align: center;
+      min-width: 60%;
     }
 
     footer {
@@ -490,27 +444,6 @@
       border-top: 1px solid #111827;
       background: #020617;
       text-align: right;
-    }
-
-    .checklist {
-      list-style: none;
-      padding-left: 0;
-    }
-
-    .checklist li {
-      display: flex;
-      align-items: center;
-      gap: 0.4rem;
-      margin-bottom: 0.3rem;
-    }
-
-    .checklist input {
-      accent-color: #38bdf8;
-    }
-
-    .progress-text {
-      font-size: 0.8rem;
-      margin-top: 0.3rem;
     }
 
     @media (max-width: 840px) {
@@ -549,56 +482,14 @@
         grid-template-columns: minmax(0, 1fr);
       }
     }
-
-    /* --- Ajustes generales de iframes --- */
-    .media-box {
-      width: 100%;
-      overflow: hidden;
-      border-radius: 0.8rem;
-      border: 1px solid #1f2937;
-      background: #020617;
-      margin-top: 10px;
-    }
-    
-    /* PDF y Educaplay - altura grande */
-    .media-box.tall iframe {
-      width: 100%;
-      height: 900px;  /* antes 750px */
-      border: 0;
-      display: block;
-    }
-    
-    /* Videos - altura media-grande */
-    .media-box.video iframe {
-      width: 100%;
-      height: 500px;  /* antes 450px */
-      border: 0;
-      display: block;
-    }
-    
-    /* Forzar PDFs a ajustar tamaño */
-    .media-box.tall iframe html, 
-    .media-box.tall iframe body {
-      height: 100% !important;
-    }
-    
-    /* Evita que la tarjeta limite altura */
-    .card {
-      overflow: visible !important;
-    }
-
-  
   </style>
 </head>
 <body>
   <header>
     <div style="display:flex; align-items:center; gap:20px;">
-  
-      <!-- LOGO A LA IZQUIERDA -->
       <img src="Logo.png"
            alt="Logo institucional"
            style="width:90px; height:auto;">
-  
       <div>
         <h1>Módulo Interactivo: <strong>Educomunicativo</strong></h1>
         <small>
@@ -611,15 +502,13 @@
           </span>
         </small>
       </div>
-  
     </div>
-  
+
     <div class="badge">
       <span>🎓</span>
-      <span>Modelos de educación y experiencias educomunicativas· Educación por grupos</span>
+      <span>Modelos de educación y experiencias educomunicativas</span>
     </div>
   </header>
-
 
   <div class="layout">
     <nav>
@@ -630,7 +519,7 @@
           <span class="nav-tag">Inicio</span>
         </button>
         <button class="nav-item" data-target="subtema1">
-          <span class="label">📻 Medios de Comunicación tradicionales y digitales</span>
+          <span class="label">📻 Medios de comunicación tradicionales y digitales</span>
           <span class="nav-tag">Subtema 5</span>
         </button>
         <button class="nav-item" data-target="subtema2">
@@ -643,18 +532,14 @@
         </button>
       </div>
       <div class="nav-group">
-        <h2>Actividades</h2>
-        <button class="nav-item" data-target="actividades">
-          <span class="label">🧩 Actividades creativas</span>
-          <span class="nav-tag">Crucigrama, sopa…</span>
-        </button>
+        <h2>Recursos</h2>
         <button class="nav-item" data-target="sugerencias">
           <span class="label">⬇️ Repositorio</span>
-          <span class="nav-tag">Retroalimentación</span>
+          <span class="nav-tag">Material + Feedback</span>
         </button>
-        <button class="nav-item locked" data-target="encuesta-final" id="nav-encuesta">
+        <button class="nav-item" data-target="encuesta-final" id="nav-encuesta">
           <span class="label">📊 Encuesta final</span>
-          <span class="nav-tag">Al finalizar</span>
+          <span class="nav-tag">Valoración</span>
         </button>
         <button class="nav-item locked" data-target="certificado" id="nav-certificado">
           <span class="label">📜 Certificado</span>
@@ -686,7 +571,7 @@
             <span class="pill">⏱ Duración estimada: 6h</span>
           </div>
         </div>
-      
+
         <div class="card two-columns">
           <div>
             <h3>¿Cómo navegar este módulo?</h3>
@@ -695,52 +580,29 @@
               <li><strong>Subtema 5:</strong> video corto + diapositivas + historieta + evaluación + actividad recreativa + encuesta de satisfacción + video de finalización de módulo.</li>
               <li><strong>Subtema 6:</strong> video corto + diapositivas + infografía + audiolibro + trovas + evaluación + actividad recreativa + encuesta de satisfacción + video de finalización de módulo.</li>
               <li><strong>Foro:</strong> Da respuesta a la pregunta planteada inicialmente y danos tu opinión.</li>
-              <li><strong>Actividades Recreativas:</strong> Dirígete aquí y responde según la información compartida en cada módulo.</li>
               <li><strong>Repositorio:</strong> Aquí encontrarás los documentos y referencias bibliográficas para profundizar en cada temática.</li>
-              <li><strong>Encuesta final:</strong> solo se desbloquea cuando termines el módulo.</li>
+              <li><strong>Encuesta final:</strong> se responde al terminar el módulo y desbloquea el certificado.</li>
               <li><strong>Certificado:</strong> se habilita al enviar la encuesta de satisfacción.</li>
             </ul>
           </div>
           <div>
-            <h3>Progreso del módulo</h3>
+            <h3>Video introductorio del módulo</h3>
             <p class="muted">
-              A medida que completes las partes del módulo, marca la lista de verificación
-              en la sección <strong>“Actividades creativas”</strong> para desbloquear la encuesta y el certificado.
+              Te invitamos a ver este video antes de iniciar el recorrido por los subtemas.
             </p>
+            <div class="media-box video">
+              <iframe 
+                src="https://www.youtube.com/embed/54mFMcl38dI"
+                title="Video introductorio"
+                allowfullscreen>
+              </iframe>
+            </div>
           </div>
         </div>
-      
-        <!-- BLOQUE NUEVO: VIDEO AL FINAL -->
-        <div class="card">
-          <h3>Video introductorio</h3>
-          <p class="muted">
-            Te invitamos a ver este video antes de iniciar el recorrido por los subtemas del módulo.
-          </p>
-      
-          <div class="media-box">
-            <iframe 
-              src="https://www.youtube.com/embed/54mFMcl38dI"
-              title="Video introductorio"
-              frameborder="0"
-              allowfullscreen>
-            </iframe>
-          </div>
-        </div>
-      
       </section>
-
-
-
-
-
-
-
-
 
       <!-- SUBTEMA 5 -->
       <section class="page" id="subtema1">
-      
-        <!-- DESCRIPCIÓN GENERAL DEL SUBTEMA -->
         <div class="card">
           <div class="tagline">Subtema 5 · Formato: Video, diapositivas, historieta y juegos</div>
           <h2>Medios de comunicación tradicionales y digitales: Programas y audiencias</h2>
@@ -752,15 +614,13 @@
             actividades interactivas y videos de apoyo.
           </p>
         </div>
-      
-        <!-- VIDEO INTRODUCTORIO -->
+
         <div class="card">
           <h3>Video introductorio</h3>
           <p class="muted">
             Este video te ayudará a comprender los conceptos iniciales sobre los medios de comunicación
             y su relación con las audiencias.
           </p>
-      
           <div class="media-box video">
             <iframe
               src="https://www.youtube.com/embed/5qap5aO4i9A"
@@ -769,87 +629,73 @@
             </iframe>
           </div>
         </div>
-      
-        <!-- DIAPOSITIVAS EN PDF -->
+
         <div class="card">
           <h3>Diapositivas: Medios tradicionales y digitales</h3>
           <p class="muted">
             Aquí encontrarás los conceptos clave sobre medios tradicionales y digitales,
             programas y tipos de audiencias.
           </p>
-      
           <div class="media-box tall">
             <iframe
               src="Diapositivas_Subtema5.pdf"
               title="Diapositivas Subtema 5">
             </iframe>
           </div>
-      
           <p class="small badge-soft">
             📎 Asegúrate de que <strong>Diapositivas_Subtema5.pdf</strong> esté en el repositorio.
           </p>
         </div>
-      
-        <!-- HISTORIETA EN PDF -->
+
         <div class="card">
           <h3>Historieta: El superpoder de la comunicación</h3>
           <p class="muted">
             Esta historieta muestra cómo la comunicación transforma relaciones e impacta en la sociedad.
           </p>
-      
           <div class="media-box tall">
             <iframe
               src="Historieta_Subtema5.pdf"
               title="Historieta Subtema 5">
             </iframe>
           </div>
-      
           <p class="small badge-soft">
             💬 ¿Qué personaje representa mejor tu estilo de comunicación?
           </p>
         </div>
-      
-        <!-- QUIZ EDUCAPLAY -->
+
         <div class="card">
           <h3>Evaluación: Quiz sobre medios y escuela</h3>
           <p class="muted">
             Responde este quiz para evaluar tu aprendizaje.
           </p>
-      
           <div class="media-box tall">
             <iframe
               src="https://es.educaplay.com/recursos-educativos/26928214-quiz_medios_y_escuela.html"
               title="Quiz medios y escuela">
             </iframe>
           </div>
-      
           <p class="small badge-soft">✅ Guarda tu resultado como evidencia.</p>
         </div>
-      
-        <!-- JUEGO DE MEMORIA -->
+
         <div class="card">
           <h3>Juego de memoria: Medios y escuela</h3>
           <p class="muted">
             Pon a prueba tu memoria relacionando conceptos clave.
           </p>
-      
           <div class="media-box tall">
             <iframe
               src="https://es.educaplay.com/recursos-educativos/26926475-memoria_medios_y_escuela.html"
               title="Juego de memoria">
             </iframe>
           </div>
-      
           <p class="small badge-soft">🎮 Intenta lograr el menor tiempo.</p>
         </div>
-      
-        <!-- VIDEO COMPLEMENTARIO -->
+
         <div class="card">
           <h3>Video complementario</h3>
           <p class="muted">
             Este video amplía los conceptos trabajados en este subtema.
           </p>
-      
           <div class="media-box video">
             <iframe
               src="https://www.youtube.com/embed/g6V9dOo8u1I"
@@ -858,14 +704,12 @@
             </iframe>
           </div>
         </div>
-      
-        <!-- VIDEO FINAL -->
+
         <div class="card">
           <h3>Video de cierre del Subtema 5</h3>
           <p class="muted">
             Este video recoge las ideas principales del subtema.
           </p>
-      
           <div class="media-box video">
             <iframe
               src="https://www.youtube.com/embed/WFZs98i30wU"
@@ -873,24 +717,53 @@
               allowfullscreen>
             </iframe>
           </div>
-      
           <p class="small">
             👉 ¿Qué medio influye más en tu vida y por qué?
           </p>
         </div>
-      
+
+        <!-- ENCUESTA DE SATISFACCIÓN SUBTEMA 5 -->
+        <div class="card">
+          <h3>Encuesta de satisfacción del Subtema 5</h3>
+          <p class="muted">
+            Reflexiona brevemente sobre tu experiencia con los contenidos de este subtema.
+            Esta encuesta es solo orientativa y no se envía a un servidor.
+          </p>
+
+          <div class="survey-grid">
+            <div class="header">Ítem</div>
+            <div class="header">Muy en desacuerdo</div>
+            <div class="header">En desacuerdo</div>
+            <div class="header">De acuerdo</div>
+            <div class="header">Muy de acuerdo</div>
+
+            <div class="survey-grid-row">
+              <div>Comprendí mejor la diferencia entre medios tradicionales y digitales.</div>
+              <div><input type="radio" name="s5_1" value="1" /></div>
+              <div><input type="radio" name="s5_1" value="2" /></div>
+              <div><input type="radio" name="s5_1" value="3" /></div>
+              <div><input type="radio" name="s5_1" value="4" /></div>
+            </div>
+
+            <div class="survey-grid-row">
+              <div>Los recursos (video, diapositivas, historieta, juegos) fueron pertinentes.</div>
+              <div><input type="radio" name="s5_2" value="1" /></div>
+              <div><input type="radio" name="s5_2" value="2" /></div>
+              <div><input type="radio" name="s5_2" value="3" /></div>
+              <div><input type="radio" name="s5_2" value="4" /></div>
+            </div>
+          </div>
+
+          <p style="margin-top:0.6rem;">Comentario breve (opcional):</p>
+          <textarea class="input" placeholder="¿Qué te gustó más de este subtema 5?"></textarea>
+          <p class="small badge-soft" style="margin-top:0.4rem;">
+            📝 Recuerda que estas respuestas se guardan solo en tu propio equipo.
+          </p>
+        </div>
       </section>
 
-
-
-
-      
-        
-      
       <!-- SUBTEMA 6 -->
       <section class="page" id="subtema2">
-      
-        <!-- DESCRIPCIÓN GENERAL DEL SUBTEMA -->
         <div class="card">
           <div class="tagline">Subtema 6 · Nuevos modos de leer</div>
           <h2>Nuevos modos de leer: soportes, formatos y experiencias</h2>
@@ -901,14 +774,12 @@
             trovas, actividades interactivas y una encuesta de satisfacción específica del subtema.
           </p>
         </div>
-      
-        <!-- VIDEO DE BIENVENIDA -->
+
         <div class="card">
           <h3>Video de bienvenida al Subtema 6</h3>
           <p class="muted">
             Comienza viendo este video corto que introduce los nuevos modos de leer en la era digital.
           </p>
-      
           <div class="media-box video">
             <iframe
               src="https://www.youtube.com/embed/ESANdHMg7Nc"
@@ -917,132 +788,111 @@
             </iframe>
           </div>
         </div>
-      
-        <!-- DIAPOSITIVAS EN PDF -->
+
         <div class="card">
           <h3>Diapositivas: Conceptualización sobre los nuevos modos de leer</h3>
           <p class="muted">
             Estas diapositivas presentan los conceptos fundamentales sobre los nuevos modos de leer,
             sus características y desafíos.
           </p>
-      
           <div class="media-box tall">
             <iframe
               src="Diapositivas_Subtema6.pdf"
               title="Diapositivas Subtema 6">
             </iframe>
           </div>
-      
           <p class="small badge-soft">
             📎 Verifica que el archivo <strong>Diapositivas_Subtema6.pdf</strong> esté en el repositorio.
           </p>
         </div>
-      
-        <!-- INFOGRAFÍA (IMAGEN) -->
+
         <div class="card">
           <h3>Infografía: Consumo de lectura digital en 2025</h3>
           <p class="muted">
             Esta infografía presenta datos estadísticos actuales sobre el consumo de lectura digital
             en el año 2025. Observa las tendencias, edades, dispositivos y tipos de contenido que más se consumen.
           </p>
-      
           <div class="media-box">
             <img
               src="Infografía_Subtema3.jpg"
               alt="Infografía sobre consumo de lectura digital 2025" />
           </div>
-      
           <p class="small badge-soft">
-            📊 Puedes comentar en clase qué dato te sorprendió más y por qué.
+            📊 Comenta qué dato te sorprendió más y por qué.
           </p>
         </div>
-      
-        <!-- AUDIOLIBRO -->
+
         <div class="card">
           <h3>Audiolibro: “La estrella que perdió su brillo”</h3>
           <p class="muted">
             Escucha este audiolibro y reflexiona sobre la forma en que la historia se construye a través de la voz,
             la entonación y el ambiente sonoro. Es una manera distinta de leer: escuchando.
           </p>
-      
           <div class="media-box">
             <audio controls>
               <source src="Audiolibro_subtema3.mp3" type="audio/mpeg" />
               Tu navegador no soporta el elemento de audio.
             </audio>
           </div>
-      
           <p class="small badge-soft">
             🎧 Mientras escuchas, piensa: ¿en qué se diferencia esta experiencia de leer el mismo texto en papel?
           </p>
         </div>
-      
-        <!-- TROVAS -->
+
         <div class="card">
           <h3>Trovas: Nuevos modos de leer</h3>
           <p class="muted">
             Estas trovas presentan, de manera rítmica y creativa, algunas ideas sobre los nuevos modos de leer.
             Escúchalas con atención e identifica los mensajes clave que transmiten.
           </p>
-      
           <div class="media-box">
             <audio controls>
               <source src="Trovas_subtema3.wav" type="audio/wav" />
               Tu navegador no soporta el elemento de audio.
             </audio>
           </div>
-      
           <p class="small badge-soft">
             🎶 Puedes intentar escribir tus propias trovas sobre cómo lees hoy en comparación con hace unos años.
           </p>
         </div>
-      
-        <!-- EVALUACIÓN EN EDUCAPLAY -->
+
         <div class="card">
           <h3>Evaluación: Nuevos modos de leer</h3>
           <p class="muted">
             Completa esta evaluación en Educaplay para comprobar tu comprensión del subtema.
           </p>
-      
           <div class="media-box tall">
             <iframe
               src="https://es.educaplay.com/recursos-educativos/26940398-lectura_critica_de_medios.html"
-              title="Evaluación subtema 6 (reemplazar por enlace de Educaplay)">
+              title="Evaluación subtema 6">
             </iframe>
           </div>
-      
           <p class="small badge-soft">
-            ✅ Cuando tengas el enlace definitivo de la evaluación en Educaplay, reemplaza la URL del iframe por la tuya.
+            ✅ Puedes registrar tu resultado como evidencia.
           </p>
         </div>
-      
-        <!-- ACTIVIDAD RECREATIVA EN EDUCAPLAY -->
+
         <div class="card">
           <h3>Actividad recreativa: Juego sobre los nuevos modos de leer</h3>
           <p class="muted">
             Participa en esta actividad recreativa en Educaplay para reforzar los contenidos de forma lúdica.
           </p>
-      
           <div class="media-box tall">
             <iframe
               src="https://es.educaplay.com/recursos-educativos/26928042-lectura_critica_de_medios.html"
-              title="Actividad recreativa subtema 6 (reemplazar por enlace de Educaplay)">
+              title="Actividad recreativa subtema 6">
             </iframe>
           </div>
-      
           <p class="small badge-soft">
-            🎮 Igual que en la evaluación, reemplaza esta URL por el enlace de tu juego en Educaplay.
+            🎮 Intenta mejorar tu puntaje cada vez que lo juegues.
           </p>
         </div>
-      
-      
-        <!-- VIDEO COMPLEMENTARIO -->
+
         <div class="card">
           <h3>Video complementario del subtema</h3>
           <p class="muted">
             Este video complementa y amplía algunas ideas clave sobre los nuevos modos de leer y el uso de lo digital.
           </p>
-      
           <div class="media-box video">
             <iframe
               src="https://www.youtube.com/embed/QlSUtDBJmPQ"
@@ -1051,15 +901,13 @@
             </iframe>
           </div>
         </div>
-      
-        <!-- VIDEO FINAL DEL SUBTEMA 6 -->
+
         <div class="card">
           <h3>Video de finalización del Subtema 6</h3>
           <p class="muted">
             Para cerrar el subtema, mira este video de finalización y piensa cómo se conectan estos nuevos modos de leer
             con tu propia práctica académica y personal.
           </p>
-      
           <div class="media-box video">
             <iframe
               src="https://www.youtube.com/embed/CIjaOaep3KY"
@@ -1067,12 +915,10 @@
               allowfullscreen>
             </iframe>
           </div>
-      
           <p class="small">
             👉 ¿Qué cambio específico podrías hacer en tus hábitos de lectura después de este subtema?
           </p>
         </div>
-
 
         <!-- ENCUESTA DE SATISFACCIÓN DEL SUBTEMA 6 -->
         <div class="card">
@@ -1081,14 +927,14 @@
             Cuéntanos cómo fue tu experiencia con este subtema sobre los nuevos modos de leer.
             Esta encuesta es solo orientativa y no se envía a ningún servidor.
           </p>
-      
+
           <div class="survey-grid">
             <div class="header">Ítem</div>
             <div class="header">Muy en desacuerdo</div>
             <div class="header">En desacuerdo</div>
             <div class="header">De acuerdo</div>
             <div class="header">Muy de acuerdo</div>
-      
+
             <div class="survey-grid-row">
               <div>Los recursos del subtema (video, diapositivas, audiolibro, trovas) fueron claros.</div>
               <div><input type="radio" name="s6_1" value="1" /></div>
@@ -1096,7 +942,7 @@
               <div><input type="radio" name="s6_1" value="3" /></div>
               <div><input type="radio" name="s6_1" value="4" /></div>
             </div>
-      
+
             <div class="survey-grid-row">
               <div>Las actividades en Educaplay me ayudaron a reforzar lo aprendido.</div>
               <div><input type="radio" name="s6_2" value="1" /></div>
@@ -1104,7 +950,7 @@
               <div><input type="radio" name="s6_2" value="3" /></div>
               <div><input type="radio" name="s6_2" value="4" /></div>
             </div>
-      
+
             <div class="survey-grid-row">
               <div>Este subtema me hizo reflexionar sobre mis propios modos de leer.</div>
               <div><input type="radio" name="s6_3" value="1" /></div>
@@ -1113,27 +959,19 @@
               <div><input type="radio" name="s6_3" value="4" /></div>
             </div>
           </div>
-      
+
           <p style="margin-top:0.6rem;">Comentario adicional (opcional):</p>
           <textarea
             class="input"
             placeholder="Escribe aquí un comentario breve sobre tu experiencia con este subtema..."
           ></textarea>
-      
+
           <p class="small badge-soft" style="margin-top:0.4rem;">
-            📌 Esta encuesta es solo para reflexión personal. Si necesitas recopilar respuestas reales,
-            puedes reemplazarla por un formulario en línea (por ejemplo, Google Forms).
+            📌 Esta encuesta es solo para reflexión personal. Si necesitas recopilación real,
+            puedes reemplazarla por un formulario en línea.
           </p>
         </div>
-
-        
       </section>
-
-
-
-
-
-
 
       <!-- FORO -->
       <section class="page" id="entrevistas">
@@ -1141,20 +979,21 @@
           <div class="tagline">Foro del módulo</div>
           <h2>Foro: Medios tradicionales y modos de leer en el siglo XXI</h2>
           <p class="muted">
-            Responde a la siguiente pregunta y lee los aportes de otras personas.
+            Responde a la siguiente pregunta y lee los aportes de otras personas que usen este mismo equipo.
+            Las respuestas se guardan únicamente en este navegador (no se envían a un servidor).
           </p>
           <p style="margin-top:0.4rem;">
             <strong>Pregunta del foro:</strong><br>
             <em>¿Con qué medios tradicionales te identificas y cuál es tu modo de leer actualmente en el siglo XXI?</em>
           </p>
         </div>
-      
+
         <div class="card">
           <h3>Publica tu aporte</h3>
           <p class="muted">
             Escribe tu nombre (o seudónimo) y tu respuesta al foro. Puedes publicar más de una vez si lo deseas.
           </p>
-      
+
           <div class="two-columns">
             <div>
               <label for="foro-nombre" class="small">Nombre o seudónimo</label>
@@ -1172,103 +1011,43 @@
                 placeholder="Escribe aquí con qué medios tradicionales te identificas y cómo lees actualmente (en papel, en pantalla, audiolibros, redes, etc.)..."
               ></textarea>
               <button class="btn btn-secondary" id="foro-publicar" style="margin-top:0.5rem;">
-                Publicar aporte
+                Publicar aporte en este equipo
               </button>
             </div>
-      
-          </div>
-        </div>
-      </section>
 
-      
-      
-      <!-- ACTIVIDADES CREATIVAS -->
-      <section class="page" id="actividades">
-        <div class="card">
-          <div class="tagline">Actividades creativas</div>
-          <h2>Juegos, crucigramas y más</h2>
-          <p class="muted">
-            Aquí puedes integrar actividades creadas en otras plataformas (Educaplay, LearningApps,
-            Genially, etc.) usando iframes, como si fuera un mini-Moodle.
-          </p>
-        </div>
-
-        <div class="card two-columns">
-          <div>
-            <h3>Crucigrama / Sopa de letras</h3>
-            <p class="small">
-              📌 Crea el crucigrama en una herramienta externa y pega el iframe aquí.
-            </p>
-            <div class="media-box" style="min-height: 200px;">
-              <!-- Sustituye el src por el iframe de tu actividad -->
-              <iframe
-                src="https://es.educaplay.com/"
-                title="Actividad crucigrama"
-                frameborder="0"
-              ></iframe>
+            <div>
+              <h3>Aportes guardados en este equipo</h3>
+              <p class="muted small">
+                Aquí verás los aportes que se han escrito desde este mismo navegador.
+              </p>
+              <div id="foro-respuestas" class="small" style="margin-top:0.4rem; max-height:400px; overflow-y:auto;">
+              </div>
             </div>
           </div>
-          <div>
-            <h3>Completar frases / Relacionar columnas</h3>
-            <p class="muted">
-              Como ejemplo, una actividad de completar frase directamente en código:
-            </p>
-            <p class="small">Escribe la palabra que falta:</p>
-            <p>
-              La educación en <input id="comp-frase" class="input" style="display:inline-block; width:120px;" placeholder="¿campo o ciudad?" />
-              enfrenta retos específicos relacionados con <strong>________</strong>.
-            </p>
-            <button class="btn btn-secondary" id="btn-frase">Ver sugerencia</button>
-            <p id="frase-result" class="quiz-result"></p>
-          </div>
-        </div>
 
-        <div class="card">
-          <h3>Tarea seria del módulo</h3>
-          <p class="muted">
-            Esta tarea debe ser un producto importante (ej. infografía, micro-documental, mapa conceptual).
+          <p class="small badge-soft" style="margin-top:0.4rem;">
+            💾 Si quieres enviar tu aporte al docente, copia y pega el texto en un documento o correo.
           </p>
-          <ul>
-            <li>Descripción detallada de la tarea.</li>
-            <li>Criterios de evaluación (rúbrica resumida).</li>
-            <li>Fecha límite (si aplica).</li>
-          </ul>
-          <p class="small badge-soft">
-            📎 Puedes añadir aquí el enlace a un formulario de entrega (Drive, Classroom, etc.).
-          </p>
-        </div>
-
-        <div class="card">
-          <h3>Lista de verificación · ¿Ya terminaste el módulo?</h3>
-          <p class="muted">
-            Marca solo cuando realmente hayas pasado por cada parte del módulo. Esto desbloquea la encuesta
-            de satisfacción y, luego, el certificado.
-          </p>
-          <ul class="checklist">
-            <li>
-              <input type="checkbox" id="chk-sub1" />
-              <label for="chk-sub1">He visto el video del Subtema 1 y realizado su actividad.</label>
-            </li>
-            <li>
-              <input type="checkbox" id="chk-sub2" />
-              <label for="chk-sub2">He escuchado al menos un capítulo del podcast del Subtema 2.</label>
-            </li>
-            <li>
-              <input type="checkbox" id="chk-entrevistas" />
-              <label for="chk-entrevistas">He visto las entrevistas y participado del debate.</label>
-            </li>
-            <li>
-              <input type="checkbox" id="chk-act" />
-              <label for="chk-act">He realizado al menos una actividad creativa (crucigrama, sopa, etc.).</label>
-            </li>
-          </ul>
-          <button class="btn btn-secondary" id="btn-modulo-completo">Marcar módulo como finalizado</button>
-          <p id="modulo-msg" class="progress-text"></p>
         </div>
       </section>
 
-      <!-- SUGERENCIAS -->
+      <!-- REPOSITORIO + SUGERENCIAS -->
       <section class="page" id="sugerencias">
+        <div class="card">
+          <div class="tagline">Repositorio del módulo 2</div>
+          <h2>Material de apoyo</h2>
+          <p class="muted">
+            Aquí encontrarás la información correspondiente a este <strong>Módulo 2</strong> por si deseas indagar
+            y reforzar tus conocimientos.
+          </p>
+          <div class="media-box tall">
+            <iframe
+              src="Repositorio.pdf"
+              title="Repositorio del módulo 2">
+            </iframe>
+          </div>
+        </div>
+
         <div class="card">
           <div class="tagline">Espacio de aporte de los participantes</div>
           <h2>Buzón de sugerencias y observaciones</h2>
@@ -1292,14 +1071,12 @@
       <!-- ENCUESTA FINAL -->
       <section class="page" id="encuesta-final">
         <div class="card">
-          <div class="tagline">Encuesta de satisfacción</div>
+          <div class="tagline">Encuesta de satisfacción general</div>
           <h2>¿Cómo te fue con este módulo?</h2>
           <p class="muted">
-            Esta encuesta se habilita solo cuando has marcado el módulo como completado. Al enviarla,
-            se desbloqueará el certificado.
+            Esta encuesta recoge tu valoración global del módulo. Al enviarla, se desbloqueará el certificado.
           </p>
 
-          <!-- Ejemplo de escala tipo Likert -->
           <div class="survey-grid">
             <div class="header">Ítem</div>
             <div class="header">Muy en desacuerdo</div>
@@ -1328,6 +1105,20 @@
               <div><input type="radio" name="s3" value="3" /></div>
               <div><input type="radio" name="s3" value="4" /></div>
             </div>
+            <div class="survey-grid-row">
+              <div>La navegación de la página fue clara y de fácil acceso.</div>
+              <div><input type="radio" name="s4" value="1" /></div>
+              <div><input type="radio" name="s4" value="2" /></div>
+              <div><input type="radio" name="s4" value="3" /></div>
+              <div><input type="radio" name="s4" value="4" /></div>
+            </div>
+            <div class="survey-grid-row">
+              <div>La variedad de recursos (videos, audios, PDFs, juegos) facilitó mi aprendizaje.</div>
+              <div><input type="radio" name="s5" value="1" /></div>
+              <div><input type="radio" name="s5" value="2" /></div>
+              <div><input type="radio" name="s5" value="3" /></div>
+              <div><input type="radio" name="s5" value="4" /></div>
+            </div>
           </div>
 
           <p style="margin-top: 0.5rem;">Comentario adicional (opcional):</p>
@@ -1353,7 +1144,7 @@
             imprimir o guardar como PDF desde tu navegador.
           </p>
           <p id="cert-locked-msg" class="small badge-soft">
-            🔒 Primero debes completar el módulo y enviar la encuesta de satisfacción para activar este certificado.
+            🔒 Primero debes enviar la encuesta de satisfacción para activar este certificado.
           </p>
           <input
             id="nombre-certificado"
@@ -1361,73 +1152,38 @@
             placeholder="Escribe aquí tu nombre completo..."
             disabled
           />
-          <button class="btn" id="btn-certificado" disabled>Generar certificado</button>
+          <button class="btn" id="btn-certificado" disabled>Actualizar nombre en el certificado</button>
           <button class="btn btn-secondary" id="btn-descargar-cert" disabled>Imprimir / Guardar PDF</button>
         </div>
-        
-        
+
         <div class="certificate" id="certificate-view">
-          <h2>Universidad [Nombre de la U]</h2>
-          <h3>Certificado de participación</h3>
-          <p>Se certifica que</p>
-          <p class="certificate-name" id="cert-name">[Nombre del estudiante]</p>
-          <p>
-            ha participado y completado satisfactoriamente el
-            <strong>Módulo 2: [Nombre del módulo]</strong>, con una dedicación aproximada de 2 horas,
-            desarrollando actividades de reflexión, análisis y creación de contenidos.
-          </p>
-          <p style="margin-top: 0.4rem;">
-            Fecha de emisión: <span id="cert-date"></span>
-          </p>
-          <div class="certificate-footer">
-            <div>
-              <p>__________________________</p>
-              <p>Docente responsable</p>
-            </div>
-            <div class="certificate-logos">
-              <div class="logo-box">Logo U</div>
-              <div class="logo-box">Logo Programa</div>
-            </div>
-            <div>
-              <p class="small">Módulo creado por: <strong>[Nombres del grupo]</strong></p>
-            </div>
+          <div class="certificate-inner">
+            <img src="Certificado.png" alt="Certificado del módulo" />
+            <div class="certificate-name-overlay" id="cert-name">[Nombre del estudiante]</div>
           </div>
         </div>
 
         <p class="small" style="margin-top: 0.4rem;">
-          💡 Para imprimir o guardar como PDF: botón “Imprimir / Guardar PDF” o Ctrl+P y selecciona “Guardar como PDF”.
+          💡 Para imprimir o guardar como PDF: usa el botón “Imprimir / Guardar PDF” o Ctrl+P y selecciona “Guardar como PDF”.
         </p>
       </section>
     </main>
   </div>
 
   <footer>
-    Módulo diseñado por el grupo [Nombre del grupo] · Asignatura: [Nombre de la asignatura]
+    Módulo diseñado por el grupo Prisma UniPamplona · Asignatura: Comunicación y Educación I
   </footer>
 
   <script>
-    // Claves de estado en localStorage
-    const MODULE_KEY = "modulo_completado";
+    // Solo guardamos estado de encuesta/certificado
     const SURVEY_KEY = "encuesta_completada";
-
     const state = {
-      moduleCompleted: localStorage.getItem(MODULE_KEY) === "1",
       surveyCompleted: localStorage.getItem(SURVEY_KEY) === "1",
     };
 
-    // Elementos de navegación y páginas
     const navItems = document.querySelectorAll(".nav-item");
     const pages = document.querySelectorAll(".page");
-    const navEncuesta = document.getElementById("nav-encuesta");
     const navCert = document.getElementById("nav-certificado");
-
-    // Botones y elementos para módulo completado
-    const chkSub1 = document.getElementById("chk-sub1");
-    const chkSub2 = document.getElementById("chk-sub2");
-    const chkEnt = document.getElementById("chk-entrevistas");
-    const chkAct = document.getElementById("chk-act");
-    const btnModuloCompleto = document.getElementById("btn-modulo-completo");
-    const moduloMsg = document.getElementById("modulo-msg");
 
     // Encuesta
     const btnEncuesta = document.getElementById("btn-enviar-encuesta");
@@ -1442,27 +1198,22 @@
     const btnCert = document.getElementById("btn-certificado");
     const btnDescargarCert = document.getElementById("btn-descargar-cert");
     const certNameSpan = document.getElementById("cert-name");
-    const certDateSpan = document.getElementById("cert-date");
     const nombreInput = document.getElementById("nombre-certificado");
     const certLockedMsg = document.getElementById("cert-locked-msg");
 
-    // Mini-quiz
-    const btnQuiz = document.getElementById("btn-quiz");
-    const quizResult = document.getElementById("quiz-result");
+    // Foro
+    const foroNombre = document.getElementById("foro-nombre");
+    const foroTexto = document.getElementById("foro-texto");
+    const foroPublicar = document.getElementById("foro-publicar");
+    const foroRespuestas = document.getElementById("foro-respuestas");
+    const FORO_KEY = "foro_respuestas_modulo";
 
-    // Actividad completar frase
-    const btnFrase = document.getElementById("btn-frase");
-    const fraseInput = document.getElementById("comp-frase");
-    const fraseResult = document.getElementById("frase-result");
-
-    // Navegación entre secciones (con bloqueo)
+    // Navegación entre secciones (con bloqueo sólo del certificado)
     navItems.forEach((btn) => {
       btn.addEventListener("click", () => {
         if (btn.classList.contains("locked")) {
-          if (btn === navEncuesta && !state.moduleCompleted) {
-            alert("Primero completa el módulo (lista de verificación en Actividades creativas) para acceder a la encuesta.");
-          } else if (btn === navCert && !state.surveyCompleted) {
-            alert("Primero debes completar el módulo y enviar la encuesta de satisfacción para acceder al certificado.");
+          if (btn === navCert && !state.surveyCompleted) {
+            alert("Primero debes enviar la encuesta de satisfacción para acceder al certificado.");
           }
           return;
         }
@@ -1475,15 +1226,7 @@
       });
     });
 
-    // Actualizar bloqueo/estado visual de encuesta y certificado
     function updateLocks() {
-      if (navEncuesta) {
-        if (state.moduleCompleted) {
-          navEncuesta.classList.remove("locked");
-        } else {
-          navEncuesta.classList.add("locked");
-        }
-      }
       if (navCert) {
         if (state.surveyCompleted) {
           navCert.classList.remove("locked");
@@ -1506,71 +1249,10 @@
         }
       }
 
-      if (moduloMsg) {
-        if (state.moduleCompleted) {
-          moduloMsg.textContent =
-            "✅ Módulo marcado como finalizado. Ya puedes acceder a la encuesta de satisfacción.";
-          moduloMsg.style.color = "#4ade80";
-        } else {
-          moduloMsg.textContent =
-            "Cuando marques todas las casillas y confirmes, se desbloqueará la encuesta de satisfacción.";
-          moduloMsg.style.color = "#9ca3af";
-        }
+      if (encuestaMsg && state.surveyCompleted) {
+        encuestaMsg.textContent =
+          "✅ Encuesta registrada en este dispositivo. El certificado ya está desbloqueado.";
       }
-
-      if (encuestaMsg) {
-        if (state.surveyCompleted) {
-          encuestaMsg.textContent =
-            "✅ Encuesta registrada en este dispositivo. El certificado ya está desbloqueado.";
-        }
-      }
-    }
-
-    // Estado inicial de fecha del certificado
-    function formatFechaHoy() {
-      const hoy = new Date();
-      const opciones = { day: "numeric", month: "long", year: "numeric" };
-      return hoy.toLocaleDateString("es-CO", opciones);
-    }
-    if (certDateSpan) {
-      certDateSpan.textContent = formatFechaHoy();
-    }
-
-    // Mini-quiz: respuesta correcta = "b"
-    if (btnQuiz) {
-      btnQuiz.addEventListener("click", () => {
-        const selected = document.querySelector('input[name="q1"]:checked');
-        if (!selected) {
-          quizResult.textContent = "Primero selecciona una opción.";
-          quizResult.className = "quiz-result bad";
-          return;
-        }
-        if (selected.value === "b") {
-          quizResult.textContent = "✅ Correcto: el reto central es articular teoría y práctica.";
-          quizResult.className = "quiz-result ok";
-        } else {
-          quizResult.textContent =
-            "❌ No es la opción más precisa. Escucha de nuevo el podcast y revisa qué se plantea como reto central.";
-          quizResult.className = "quiz-result bad";
-        }
-      });
-    }
-
-    // Actividad de completar frase simple
-    if (btnFrase) {
-      btnFrase.addEventListener("click", () => {
-        const valor = (fraseInput.value || "").trim().toLowerCase();
-        if (!valor) {
-          fraseResult.textContent = "Escribe una palabra (campo, ciudad u otra que consideres).";
-          fraseResult.className = "quiz-result bad";
-          return;
-        }
-        fraseResult.textContent =
-          "🎯 Buena elección. Ahora justifica en tu cuaderno por qué elegiste \"" +
-          valor +
-          "\" y qué retos específicos identificas.";
-        fraseResult.className = "quiz-result ok";
-      });
     }
 
     // Guardar sugerencias en localStorage
@@ -1589,13 +1271,7 @@
       }
     }
 
-    // Foro (respuestas guardadas en localStorage de este equipo)
-    const foroNombre = document.getElementById("foro-nombre");
-    const foroTexto = document.getElementById("foro-texto");
-    const foroPublicar = document.getElementById("foro-publicar");
-    const foroRespuestas = document.getElementById("foro-respuestas");
-    const FORO_KEY = "foro_respuestas_modulo";
-    
+    // Foro: cargar datos
     let foroData = [];
     try {
       const savedForo = localStorage.getItem(FORO_KEY);
@@ -1605,8 +1281,7 @@
     } catch (e) {
       foroData = [];
     }
-    
-    // Función para renderizar las respuestas del foro
+
     function renderForo() {
       if (!foroRespuestas) return;
       if (!foroData.length) {
@@ -1614,7 +1289,7 @@
           '<p class="muted small">Aún no hay respuestas guardadas en este equipo. ¡Sé la primera persona en participar!</p>';
         return;
       }
-    
+
       foroRespuestas.innerHTML = foroData
         .map((item) => {
           const fecha = new Date(item.fecha).toLocaleString("es-CO");
@@ -1629,66 +1304,42 @@
         })
         .join("");
     }
-    
+
     renderForo();
-    
-    // Publicar nueva respuesta
+
     if (foroPublicar && foroTexto) {
       foroPublicar.addEventListener("click", () => {
         const nombre = (foroNombre?.value || "").trim();
         const texto = (foroTexto.value || "").trim();
-    
+
         if (!texto) {
           alert("Por favor escribe tu aporte antes de publicarlo.");
           return;
         }
-    
+
         const nueva = {
           nombre,
           texto,
           fecha: new Date().toISOString(),
         };
-    
-        foroData.unshift(nueva); // añade al inicio
+
+        foroData.unshift(nueva);
         localStorage.setItem(FORO_KEY, JSON.stringify(foroData));
         foroTexto.value = "";
         renderForo();
       });
     }
 
-
-
-    
-    // Marcar módulo como completado
-    if (btnModuloCompleto) {
-      btnModuloCompleto.addEventListener("click", () => {
-        const allChecked =
-          chkSub1?.checked && chkSub2?.checked && chkEnt?.checked && chkAct?.checked;
-        if (!allChecked) {
-          moduloMsg.textContent =
-            "⚠️ Aún faltan partes por marcar como realizadas. Revisa la lista de verificación.";
-          moduloMsg.style.color = "#f97373";
-          return;
-        }
-        state.moduleCompleted = true;
-        localStorage.setItem(MODULE_KEY, "1");
-        updateLocks();
-      });
-    }
-
     // Enviar encuesta y desbloquear certificado
     if (btnEncuesta) {
       btnEncuesta.addEventListener("click", () => {
-        if (!state.moduleCompleted) {
-          alert("Primero marca el módulo como finalizado en la sección de Actividades creativas.");
-          return;
-        }
-
         const s1 = document.querySelector('input[name="s1"]:checked');
         const s2 = document.querySelector('input[name="s2"]:checked');
         const s3 = document.querySelector('input[name="s3"]:checked');
+        const s4 = document.querySelector('input[name="s4"]:checked');
+        const s5 = document.querySelector('input[name="s5"]:checked');
 
-        if (!s1 || !s2 || !s3) {
+        if (!s1 || !s2 || !s3 || !s4 || !s5) {
           alert("Por favor responde todos los ítems de la encuesta antes de enviarla.");
           return;
         }
@@ -1701,7 +1352,7 @@
       });
     }
 
-    // Certificado: poner nombre y habilitar impresión
+    // Certificado: actualizar nombre
     if (btnCert && certNameSpan && nombreInput) {
       btnCert.addEventListener("click", () => {
         if (!state.surveyCompleted) {
@@ -1723,14 +1374,10 @@
       });
     }
 
-    // Al cargar la página, aplicar bloqueos iniciales
     updateLocks();
   </script>
 </body>
 </html>
-
-
-
 
 
 
