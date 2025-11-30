@@ -1,0 +1,1307 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <title>Módulo Interactivo – Nombre del Tema</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <style>
+    :root {
+      --bg: #0f172a;
+      --bg-soft: #111827;
+      --accent: #38bdf8;
+      --accent-soft: rgba(56, 189, 248, 0.1);
+      --text: #e5e7eb;
+      --text-soft: #9ca3af;
+      --card: #020617;
+      --danger: #f97373;
+      --success: #4ade80;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
+        sans-serif;
+    }
+
+    body {
+      background: radial-gradient(circle at top, #1f2937, #020617 55%);
+      color: var(--text);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    header {
+      padding: 1rem 1.5rem;
+      border-bottom: 1px solid #1f2937;
+      background: linear-gradient(to right, #020617, #111827);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 1rem;
+      position: sticky;
+      top: 0;
+      z-index: 10;
+    }
+
+    header h1 {
+      font-size: 1.3rem;
+    }
+
+    header small {
+      display: block;
+      font-size: 0.75rem;
+      color: var(--text-soft);
+    }
+
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      font-size: 0.75rem;
+      border-radius: 999px;
+      padding: 0.3rem 0.7rem;
+      background: var(--accent-soft);
+      color: var(--accent);
+      border: 1px solid rgba(56, 189, 248, 0.4);
+    }
+
+    .layout {
+      display: grid;
+      grid-template-columns: 270px 1fr;
+      flex: 1;
+      min-height: 0;
+    }
+
+    nav {
+      border-right: 1px solid #1f2937;
+      background: linear-gradient(to bottom, #020617, #020617 40%, #050816);
+      padding: 1rem;
+      overflow-y: auto;
+    }
+
+    nav h2 {
+      font-size: 0.9rem;
+      color: var(--text-soft);
+      margin-bottom: 0.7rem;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+    }
+
+    .nav-group {
+      margin-bottom: 1.2rem;
+    }
+
+    .nav-item {
+      width: 100%;
+      text-align: left;
+      background: transparent;
+      border: none;
+      color: var(--text-soft);
+      font-size: 0.9rem;
+      padding: 0.45rem 0.6rem;
+      border-radius: 0.6rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 0.5rem;
+      cursor: pointer;
+      transition: background 0.15s, color 0.15s, transform 0.05s, opacity 0.1s;
+    }
+
+    .nav-item span.label {
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+    }
+
+    .nav-item:hover:not(.locked) {
+      background: rgba(148, 163, 184, 0.12);
+      color: #f9fafb;
+      transform: translateX(1px);
+    }
+
+    .nav-item.active {
+      background: var(--accent-soft);
+      color: var(--accent);
+      border: 1px solid rgba(56, 189, 248, 0.7);
+    }
+
+    .nav-item.locked {
+      opacity: 0.4;
+      cursor: not-allowed;
+    }
+
+    .nav-tag {
+      font-size: 0.7rem;
+      padding: 0.1rem 0.4rem;
+      border-radius: 999px;
+      background: rgba(15, 23, 42, 0.85);
+      border: 1px solid #1f2937;
+    }
+
+    main {
+      padding: 1.2rem 1.5rem 1.5rem;
+      overflow-y: auto;
+    }
+
+    .page {
+      display: none;
+      max-width: 950px;
+      margin: 0 auto;
+      animation: fadeIn 0.3s ease-out;
+    }
+
+    .page.active {
+      display: block;
+    }
+
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(4px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .card {
+      background: radial-gradient(circle at top left, #111827, #020617);
+      border-radius: 1rem;
+      padding: 1.1rem 1.25rem;
+      border: 1px solid #1f2937;
+      box-shadow: 0 20px 35px rgba(15, 23, 42, 0.7);
+      margin-bottom: 1rem;
+    }
+
+    .card h2 {
+      font-size: 1.2rem;
+      margin-bottom: 0.4rem;
+    }
+
+    .card h3 {
+      font-size: 1rem;
+      margin-bottom: 0.3rem;
+    }
+
+    .muted {
+      color: var(--text-soft);
+      font-size: 0.9rem;
+    }
+
+    p {
+      margin-bottom: 0.5rem;
+      line-height: 1.5;
+    }
+
+    ul {
+      padding-left: 1.1rem;
+      margin-bottom: 0.5rem;
+    }
+
+    ul li {
+      margin-bottom: 0.25rem;
+      color: var(--text-soft);
+      font-size: 0.9rem;
+    }
+
+    .tagline {
+      font-size: 0.9rem;
+      color: var(--accent);
+      margin-bottom: 0.3rem;
+    }
+
+    .pill {
+      display: inline-block;
+      padding: 0.2rem 0.5rem;
+      border-radius: 999px;
+      border: 1px solid #374151;
+      font-size: 0.75rem;
+      color: var(--text-soft);
+      margin-right: 0.25rem;
+      margin-bottom: 0.25rem;
+    }
+
+    .pill-variant {
+      border-color: rgba(56, 189, 248, 0.5);
+      color: var(--accent);
+      background: rgba(15, 23, 42, 0.9);
+    }
+
+    .flex {
+      display: flex;
+      gap: 0.7rem;
+      flex-wrap: wrap;
+      align-items: center;
+    }
+
+    .media-box {
+      border-radius: 0.8rem;
+      overflow: hidden;
+      border: 1px solid #1f2937;
+      background: #020617;
+      margin: 0.5rem 0;
+    }
+
+    .media-box iframe,
+    .media-box audio,
+    .media-box img {
+      width: 100%;
+      display: block;
+    }
+
+    .media-box audio {
+      padding: 0.4rem 0.6rem;
+    }
+
+    .two-columns {
+      display: grid;
+      grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr);
+      gap: 0.9rem;
+    }
+
+    .chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.3rem;
+      font-size: 0.75rem;
+      padding: 0.15rem 0.45rem;
+      border-radius: 999px;
+      border: 1px solid #374151;
+      color: var(--text-soft);
+    }
+
+    .chip-dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 999px;
+      background: var(--accent);
+    }
+
+    .input,
+    textarea {
+      width: 100%;
+      padding: 0.45rem 0.55rem;
+      border-radius: 0.6rem;
+      border: 1px solid #374151;
+      background: rgba(15, 23, 42, 0.85);
+      color: var(--text);
+      font-size: 0.9rem;
+      outline: none;
+      resize: vertical;
+    }
+
+    textarea {
+      min-height: 90px;
+    }
+
+    .input:focus,
+    textarea:focus {
+      border-color: rgba(56, 189, 248, 0.8);
+      box-shadow: 0 0 0 1px rgba(56, 189, 248, 0.3);
+    }
+
+    .btn {
+      border-radius: 999px;
+      border: none;
+      font-size: 0.9rem;
+      padding: 0.4rem 0.9rem;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      background: linear-gradient(to right, #38bdf8, #22c55e);
+      color: #020617;
+      font-weight: 500;
+      box-shadow: 0 14px 30px rgba(34, 197, 94, 0.4);
+      margin-top: 0.3rem;
+    }
+
+    .btn-secondary {
+      background: rgba(15, 23, 42, 0.9);
+      color: var(--text-soft);
+      border: 1px solid #374151;
+      box-shadow: none;
+    }
+
+    .btn:active {
+      transform: translateY(1px);
+      box-shadow: 0 8px 16px rgba(34, 197, 94, 0.3);
+    }
+
+    .btn[disabled] {
+      opacity: 0.5;
+      cursor: not-allowed;
+      box-shadow: none;
+    }
+
+    .small {
+      font-size: 0.8rem;
+      color: var(--text-soft);
+    }
+
+    .quiz-question {
+      margin-bottom: 0.6rem;
+    }
+
+    .quiz-options label {
+      display: flex;
+      align-items: flex-start;
+      gap: 0.35rem;
+      margin-bottom: 0.25rem;
+      font-size: 0.9rem;
+      cursor: pointer;
+    }
+
+    .quiz-result {
+      margin-top: 0.4rem;
+      font-size: 0.9rem;
+    }
+
+    .quiz-result.ok {
+      color: var(--success);
+    }
+
+    .quiz-result.bad {
+      color: var(--danger);
+    }
+
+    .badge-soft {
+      display: inline-block;
+      padding: 0.2rem 0.5rem;
+      border-radius: 999px;
+      background: rgba(15, 23, 42, 0.8);
+      border: 1px dashed #374151;
+      font-size: 0.75rem;
+      color: var(--text-soft);
+      margin-top: 0.2rem;
+    }
+
+    .survey-grid {
+      display: grid;
+      grid-template-columns: 2fr repeat(4, 1fr);
+      font-size: 0.8rem;
+      margin-top: 0.4rem;
+      border-radius: 0.6rem;
+      overflow: hidden;
+      border: 1px solid #1f2937;
+    }
+
+    .survey-grid div {
+      padding: 0.3rem 0.4rem;
+      border-bottom: 1px solid #111827;
+      border-right: 1px solid #111827;
+      background: rgba(15, 23, 42, 0.95);
+    }
+
+    .survey-grid div.header {
+      background: #020617;
+      font-weight: 500;
+    }
+
+    .survey-grid div:last-child {
+      border-right: none;
+    }
+
+    .survey-grid-row {
+      display: contents;
+    }
+
+    .survey-grid input[type="radio"] {
+      display: block;
+      margin: 0 auto;
+    }
+
+    .certificate {
+      border-radius: 1rem;
+      background: radial-gradient(circle at top, #111827, #020617);
+      border: 1px solid #1f2937;
+      padding: 1rem 1.2rem;
+      text-align: center;
+      margin-top: 0.6rem;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .certificate::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      border-radius: inherit;
+      border: 1px solid rgba(56, 189, 248, 0.25);
+      pointer-events: none;
+    }
+
+    .certificate h2 {
+      font-size: 1.3rem;
+      margin-bottom: 0.3rem;
+    }
+
+    .certificate h3 {
+      margin-top: 0.4rem;
+      margin-bottom: 0.2rem;
+    }
+
+    .certificate-name {
+      font-size: 1.1rem;
+      font-weight: 600;
+      margin: 0.35rem 0;
+    }
+
+    .certificate-footer {
+      margin-top: 0.6rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 0.75rem;
+      color: var(--text-soft);
+      gap: 0.5rem;
+      flex-wrap: wrap;
+    }
+
+    .certificate-logos {
+      display: flex;
+      gap: 0.5rem;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .logo-box {
+      width: 48px;
+      height: 48px;
+      border-radius: 0.7rem;
+      border: 1px solid #1f2937;
+      background: #020617;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.7rem;
+      color: var(--text-soft);
+    }
+
+    footer {
+      padding: 0.5rem 1.5rem;
+      font-size: 0.75rem;
+      color: var(--text-soft);
+      border-top: 1px solid #111827;
+      background: #020617;
+      text-align: right;
+    }
+
+    .checklist {
+      list-style: none;
+      padding-left: 0;
+    }
+
+    .checklist li {
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+      margin-bottom: 0.3rem;
+    }
+
+    .checklist input {
+      accent-color: #38bdf8;
+    }
+
+    .progress-text {
+      font-size: 0.8rem;
+      margin-top: 0.3rem;
+    }
+
+    @media (max-width: 840px) {
+      .layout {
+        grid-template-columns: 1fr;
+      }
+
+      nav {
+        border-right: none;
+        border-bottom: 1px solid #1f2937;
+        display: flex;
+        overflow-x: auto;
+        padding: 0.7rem 0.8rem;
+      }
+
+      nav h2 {
+        display: none;
+      }
+
+      .nav-group {
+        display: flex;
+        gap: 0.3rem;
+        margin: 0;
+      }
+
+      .nav-item {
+        white-space: nowrap;
+        font-size: 0.85rem;
+      }
+
+      main {
+        padding: 1rem;
+      }
+
+      .two-columns {
+        grid-template-columns: minmax(0, 1fr);
+      }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div>
+      <h1>Módulo Interactivo: <strong>[Tema del grupo]</strong></h1>
+      <small>
+        Facultad de [Nombre Facultad] · Universidad [Nombre U]<br />
+        <span class="badge">
+          <span>★</span> Módulo creado por el grupo: <strong>[Nombre del grupo]</strong>
+        </span>
+      </small>
+    </div>
+    <div class="badge">
+      <span>🎓</span>
+      <span>Módulo 2 · Educación por grupos</span>
+    </div>
+  </header>
+
+  <div class="layout">
+    <nav>
+      <div class="nav-group">
+        <h2>Módulo</h2>
+        <button class="nav-item active" data-target="intro">
+          <span class="label">🚀 Introducción</span>
+          <span class="nav-tag">Inicio</span>
+        </button>
+        <button class="nav-item" data-target="subtema1">
+          <span class="label">🎬 Subtema 1</span>
+          <span class="nav-tag">Video</span>
+        </button>
+        <button class="nav-item" data-target="subtema2">
+          <span class="label">🎧 Subtema 2</span>
+          <span class="nav-tag">Podcast</span>
+        </button>
+        <button class="nav-item" data-target="entrevistas">
+          <span class="label">🎙️ Entrevistas</span>
+          <span class="nav-tag">Docentes</span>
+        </button>
+      </div>
+      <div class="nav-group">
+        <h2>Actividades</h2>
+        <button class="nav-item" data-target="actividades">
+          <span class="label">🧩 Actividades creativas</span>
+          <span class="nav-tag">Crucigrama, sopa…</span>
+        </button>
+        <button class="nav-item" data-target="sugerencias">
+          <span class="label">💬 Sugerencias</span>
+          <span class="nav-tag">Retroalimentación</span>
+        </button>
+        <button class="nav-item locked" data-target="encuesta-final" id="nav-encuesta">
+          <span class="label">📊 Encuesta final</span>
+          <span class="nav-tag">Al finalizar</span>
+        </button>
+        <button class="nav-item locked" data-target="certificado" id="nav-certificado">
+          <span class="label">📜 Certificado</span>
+          <span class="nav-tag">Desbloqueado al final</span>
+        </button>
+      </div>
+    </nav>
+
+    <main>
+      <!-- INTRODUCCIÓN -->
+      <section class="page active" id="intro">
+        <div class="card">
+          <div class="tagline">Bienvenid@ al módulo</div>
+          <h2>[Título del módulo]</h2>
+          <p class="muted">
+            Este módulo fue diseñado por el grupo <strong>[Nombre del grupo]</strong> con el objetivo de
+            acercarte a la temática de <strong>[Tema]</strong> a través de videos cortos,
+            podcasts, debates y actividades interactivas. No necesitas conocimientos previos:
+            aquí te damos todas las herramientas paso a paso.
+          </p>
+          <p>
+            Te recomendamos <strong>usar audífonos</strong> y tener a la mano papel y lápiz para las
+            actividades. El tiempo estimado para completar este módulo es de
+            <strong>2 horas</strong>.
+          </p>
+          <div class="flex" style="margin-top: 0.5rem;">
+            <span class="pill pill-variant">🎯 Objetivo general: [escribir aquí]</span>
+            <span class="pill">👥 Dirigido a: [público objetivo]</span>
+            <span class="pill">⏱ Duración estimada: 2h</span>
+          </div>
+        </div>
+
+        <div class="card two-columns">
+          <div>
+            <h3>¿Cómo navegar este módulo?</h3>
+            <p class="muted">Recomendamos seguir este orden, como si estuvieras en un curso tipo Moodle:</p>
+            <ul>
+              <li><strong>Subtema 1:</strong> video corto + actividad de comprensión.</li>
+              <li><strong>Subtema 2:</strong> podcast en capítulos + tarea reflexiva.</li>
+              <li><strong>Entrevistas:</strong> voces de docentes del campo y la ciudad.</li>
+              <li><strong>Actividades creativas:</strong> crucigrama, sopas de letras, completar frases, etc.</li>
+              <li><strong>Encuesta final:</strong> solo se desbloquea cuando termines el módulo.</li>
+              <li><strong>Certificado:</strong> se habilita al enviar la encuesta de satisfacción.</li>
+            </ul>
+          </div>
+          <div>
+            <h3>Progreso del módulo</h3>
+            <p class="muted">
+              A medida que completes las partes del módulo, marca la lista de verificación
+              en la sección <strong>“Actividades creativas”</strong> para desbloquear la encuesta y el certificado.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <!-- SUBTEMA 1: VIDEO -->
+      <section class="page" id="subtema1">
+        <div class="card">
+          <div class="tagline">Subtema 1 · Formato: Video</div>
+          <h2>[Título subtema 1]</h2>
+          <p class="muted">
+            En este subtema encontrarás un <strong>video corto</strong> que introduce la temática principal.
+            El video debe complementar, no repetir, lo que ya está en los textos o en el podcast.
+          </p>
+
+          <div class="media-box">
+            <!-- Reemplaza el src por el enlace de tu video (YouTube, Vimeo o iframe de tu nube) -->
+            <iframe
+              src="https://www.youtube.com/embed/dQw4w9WgXcQ"
+              title="Video del subtema 1"
+              frameborder="0"
+              allowfullscreen
+            ></iframe>
+          </div>
+
+          <p class="small">
+            👉 Sugerencia: graben este video <strong>fuera de la U</strong>, en un lugar tranquilo, con buen sonido,
+            y que sea dinámico (no solo leyendo diapositivas).
+          </p>
+        </div>
+
+        <div class="card">
+          <h3>Actividad de comprensión (pregunta-respuesta)</h3>
+          <p class="muted">
+            Responde de forma breve. Puedes usar este espacio como una guía de estudio.
+          </p>
+          <ul>
+            <li>¿Cuál es la idea central del video?</li>
+            <li>¿Qué ejemplo te pareció más útil y por qué?</li>
+            <li>¿Qué concepto relacionarías con tu propia experiencia?</li>
+          </ul>
+          <textarea
+            class="input"
+            placeholder="Escribe aquí tus reflexiones o las respuestas de tu grupo..."
+          ></textarea>
+          <p class="small badge-soft">
+            💡 Esta actividad no se guarda en servidor, pero puedes copiar tus respuestas a un documento
+            para entregarlas como evidencia.
+          </p>
+        </div>
+      </section>
+
+      <!-- SUBTEMA 2: PODCAST -->
+      <section class="page" id="subtema2">
+        <div class="card">
+          <div class="tagline">Subtema 2 · Formato: Podcast por capítulos</div>
+          <h2>[Título subtema 2]</h2>
+          <p class="muted">
+            Aquí va un <strong>podcast con varios capítulos</strong>. El grupo puede subir 1–2 capítulos
+            iniciales, y los demás compañeros crear los siguientes.
+          </p>
+
+          <div class="media-box">
+            <!-- Puedes enlazar un audio desde un .mp3 público, SoundCloud, Spotify o similar -->
+            <audio controls>
+              <source src="ruta/al/audio-capitulo1.mp3" type="audio/mpeg" />
+              Tu navegador no soporta el elemento de audio.
+            </audio>
+          </div>
+
+          <p class="small">
+            🎧 Ejemplo: Capítulo 1 – “Introducción al tema desde la experiencia en el campo”.
+          </p>
+        </div>
+
+        <div class="card two-columns">
+          <div>
+            <h3>Actividad: Diario de escucha</h3>
+            <p class="muted">Mientras escuchas el podcast, responde:</p>
+            <ul>
+              <li>Una frase que te haya llamado la atención.</li>
+              <li>Un concepto que no conocías.</li>
+              <li>Una pregunta que le harías al autor del podcast.</li>
+            </ul>
+            <textarea
+              class="input"
+              placeholder="Escribe aquí tu reflexión sobre el podcast..."
+            ></textarea>
+          </div>
+          <div>
+            <h3>Mini-quiz (autoevaluación)</h3>
+            <div class="quiz-question">
+              <p><strong>1.</strong> Según el podcast, ¿cuál es el principal reto de [tema]?</p>
+              <div class="quiz-options">
+                <label>
+                  <input type="radio" name="q1" value="a" />
+                  a) La falta total de recursos tecnológicos.
+                </label>
+                <label>
+                  <input type="radio" name="q1" value="b" />
+                  b) La articulación entre teoría y práctica.
+                </label>
+                <label>
+                  <input type="radio" name="q1" value="c" />
+                  c) Que los estudiantes no quieran participar.
+                </label>
+              </div>
+            </div>
+            <button class="btn btn-secondary" id="btn-quiz">Revisar respuesta</button>
+            <div id="quiz-result" class="quiz-result"></div>
+            <p class="small badge-soft">
+              ✅ Puedes modificar la pregunta y las opciones directamente en el código.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <!-- ENTREVISTAS -->
+      <section class="page" id="entrevistas">
+        <div class="card">
+          <div class="tagline">Entrevistas · Docentes de antes y de ahora</div>
+          <h2>Voces que enriquecen el tema</h2>
+          <p class="muted">
+            En este espacio se presentan <strong>entrevistas cortas</strong> a docentes del campo y de la ciudad,
+            comparando perspectivas “de antes” y “de ahora” sobre la temática.
+          </p>
+        </div>
+
+        <div class="card two-columns">
+          <div>
+            <h3>Entrevista 1: Docente de campo</h3>
+            <div class="media-box">
+              <!-- Reemplaza por el enlace del video o audio de la entrevista -->
+              <iframe
+                src="https://www.youtube.com/embed/dQw4w9WgXcQ"
+                title="Entrevista docente campo"
+                frameborder="0"
+                allowfullscreen
+              ></iframe>
+            </div>
+            <p class="small">
+              💬 Preguntas sugeridas: ¿Cómo ha cambiado la enseñanza en el campo? ¿Qué desafíos siguen igual?
+            </p>
+          </div>
+          <div>
+            <h3>Entrevista 2: Docente de ciudad</h3>
+            <div class="media-box">
+              <!-- Otra entrevista -->
+              <iframe
+                src="https://www.youtube.com/embed/dQw4w9WgXcQ"
+                title="Entrevista docente ciudad"
+                frameborder="0"
+                allowfullscreen
+              ></iframe>
+            </div>
+            <p class="small">
+              💬 Preguntas sugeridas: ¿Qué oportunidades representan las TIC? ¿Qué desigualdades persisten?
+            </p>
+          </div>
+        </div>
+
+        <div class="card">
+          <h3>Actividad: Debate guiado</h3>
+          <p class="muted">
+            A partir de las entrevistas, discutan en grupo y tomen nota de los acuerdos:
+          </p>
+          <ul>
+            <li>Un aspecto en el que ambas realidades se parecen.</li>
+            <li>Un aspecto en el que son totalmente distintas.</li>
+            <li>Una propuesta concreta para mejorar la educación en ambos contextos.</li>
+          </ul>
+          <textarea
+            class="input"
+            placeholder="Escribe aquí las conclusiones del debate de tu grupo..."
+          ></textarea>
+        </div>
+      </section>
+
+      <!-- ACTIVIDADES CREATIVAS -->
+      <section class="page" id="actividades">
+        <div class="card">
+          <div class="tagline">Actividades creativas</div>
+          <h2>Juegos, crucigramas y más</h2>
+          <p class="muted">
+            Aquí puedes integrar actividades creadas en otras plataformas (Educaplay, LearningApps,
+            Genially, etc.) usando iframes, como si fuera un mini-Moodle.
+          </p>
+        </div>
+
+        <div class="card two-columns">
+          <div>
+            <h3>Crucigrama / Sopa de letras</h3>
+            <p class="small">
+              📌 Crea el crucigrama en una herramienta externa y pega el iframe aquí.
+            </p>
+            <div class="media-box" style="min-height: 200px;">
+              <!-- Sustituye el src por el iframe de tu actividad -->
+              <iframe
+                src="https://es.educaplay.com/"
+                title="Actividad crucigrama"
+                frameborder="0"
+              ></iframe>
+            </div>
+          </div>
+          <div>
+            <h3>Completar frases / Relacionar columnas</h3>
+            <p class="muted">
+              Como ejemplo, una actividad de completar frase directamente en código:
+            </p>
+            <p class="small">Escribe la palabra que falta:</p>
+            <p>
+              La educación en <input id="comp-frase" class="input" style="display:inline-block; width:120px;" placeholder="¿campo o ciudad?" />
+              enfrenta retos específicos relacionados con <strong>________</strong>.
+            </p>
+            <button class="btn btn-secondary" id="btn-frase">Ver sugerencia</button>
+            <p id="frase-result" class="quiz-result"></p>
+          </div>
+        </div>
+
+        <div class="card">
+          <h3>Tarea seria del módulo</h3>
+          <p class="muted">
+            Esta tarea debe ser un producto importante (ej. infografía, micro-documental, mapa conceptual).
+          </p>
+          <ul>
+            <li>Descripción detallada de la tarea.</li>
+            <li>Criterios de evaluación (rúbrica resumida).</li>
+            <li>Fecha límite (si aplica).</li>
+          </ul>
+          <p class="small badge-soft">
+            📎 Puedes añadir aquí el enlace a un formulario de entrega (Drive, Classroom, etc.).
+          </p>
+        </div>
+
+        <div class="card">
+          <h3>Lista de verificación · ¿Ya terminaste el módulo?</h3>
+          <p class="muted">
+            Marca solo cuando realmente hayas pasado por cada parte del módulo. Esto desbloquea la encuesta
+            de satisfacción y, luego, el certificado.
+          </p>
+          <ul class="checklist">
+            <li>
+              <input type="checkbox" id="chk-sub1" />
+              <label for="chk-sub1">He visto el video del Subtema 1 y realizado su actividad.</label>
+            </li>
+            <li>
+              <input type="checkbox" id="chk-sub2" />
+              <label for="chk-sub2">He escuchado al menos un capítulo del podcast del Subtema 2.</label>
+            </li>
+            <li>
+              <input type="checkbox" id="chk-entrevistas" />
+              <label for="chk-entrevistas">He visto las entrevistas y participado del debate.</label>
+            </li>
+            <li>
+              <input type="checkbox" id="chk-act" />
+              <label for="chk-act">He realizado al menos una actividad creativa (crucigrama, sopa, etc.).</label>
+            </li>
+          </ul>
+          <button class="btn btn-secondary" id="btn-modulo-completo">Marcar módulo como finalizado</button>
+          <p id="modulo-msg" class="progress-text"></p>
+        </div>
+      </section>
+
+      <!-- SUGERENCIAS -->
+      <section class="page" id="sugerencias">
+        <div class="card">
+          <div class="tagline">Espacio de aporte de los participantes</div>
+          <h2>Buzón de sugerencias y observaciones</h2>
+          <p class="muted">
+            Usa este espacio para escribir ideas, dudas, críticas o propuestas de mejora sobre el módulo.
+            Lo que escribas se guardará en este navegador (no se envía a un servidor).
+          </p>
+          <textarea
+            id="sugerencias-text"
+            class="input"
+            placeholder="Escribe tus sugerencias u observaciones sobre el módulo..."
+          ></textarea>
+          <button class="btn btn-secondary" id="btn-sugerencias">Guardar en este equipo</button>
+          <p class="small badge-soft">
+            💾 Tus sugerencias se guardan solo en este dispositivo (localStorage). Para compartirlas con el grupo,
+            puedes copiarlas y pegarlas en un correo o documento.
+          </p>
+        </div>
+      </section>
+
+      <!-- ENCUESTA FINAL -->
+      <section class="page" id="encuesta-final">
+        <div class="card">
+          <div class="tagline">Encuesta de satisfacción</div>
+          <h2>¿Cómo te fue con este módulo?</h2>
+          <p class="muted">
+            Esta encuesta se habilita solo cuando has marcado el módulo como completado. Al enviarla,
+            se desbloqueará el certificado.
+          </p>
+
+          <!-- Ejemplo de escala tipo Likert -->
+          <div class="survey-grid">
+            <div class="header">Ítem</div>
+            <div class="header">Muy en desacuerdo</div>
+            <div class="header">En desacuerdo</div>
+            <div class="header">De acuerdo</div>
+            <div class="header">Muy de acuerdo</div>
+
+            <div class="survey-grid-row">
+              <div>El contenido del módulo fue claro.</div>
+              <div><input type="radio" name="s1" value="1" /></div>
+              <div><input type="radio" name="s1" value="2" /></div>
+              <div><input type="radio" name="s1" value="3" /></div>
+              <div><input type="radio" name="s1" value="4" /></div>
+            </div>
+            <div class="survey-grid-row">
+              <div>Las actividades fueron retadoras e interesantes.</div>
+              <div><input type="radio" name="s2" value="1" /></div>
+              <div><input type="radio" name="s2" value="2" /></div>
+              <div><input type="radio" name="s2" value="3" /></div>
+              <div><input type="radio" name="s2" value="4" /></div>
+            </div>
+            <div class="survey-grid-row">
+              <div>El módulo me permitió aprender algo nuevo.</div>
+              <div><input type="radio" name="s3" value="1" /></div>
+              <div><input type="radio" name="s3" value="2" /></div>
+              <div><input type="radio" name="s3" value="3" /></div>
+              <div><input type="radio" name="s3" value="4" /></div>
+            </div>
+          </div>
+
+          <p style="margin-top: 0.5rem;">Comentario adicional (opcional):</p>
+          <textarea
+            id="encuesta-comentario"
+            class="input"
+            placeholder="Escribe aquí cualquier comentario general..."
+          ></textarea>
+          <button class="btn" id="btn-enviar-encuesta">Enviar encuesta y desbloquear certificado</button>
+          <p id="encuesta-msg" class="small badge-soft" style="margin-top: 0.4rem;">
+            📌 Esta encuesta se guarda localmente. Si necesitas recopilación real, puedes sustituir esto por un Google Forms incrustado.
+          </p>
+        </div>
+      </section>
+
+      <!-- CERTIFICADO -->
+      <section class="page" id="certificado">
+        <div class="card">
+          <div class="tagline">Constancia de participación</div>
+          <h2>Genera tu certificado del Módulo 2</h2>
+          <p class="muted">
+            Escribe tu nombre tal como quieres que aparezca en el certificado y luego puedes
+            imprimir o guardar como PDF desde tu navegador.
+          </p>
+          <p id="cert-locked-msg" class="small badge-soft">
+            🔒 Primero debes completar el módulo y enviar la encuesta de satisfacción para activar este certificado.
+          </p>
+          <input
+            id="nombre-certificado"
+            class="input"
+            placeholder="Escribe aquí tu nombre completo..."
+            disabled
+          />
+          <button class="btn" id="btn-certificado" disabled>Generar certificado</button>
+          <button class="btn btn-secondary" id="btn-descargar-cert" disabled>Imprimir / Guardar PDF</button>
+        </div>
+
+        <div class="certificate" id="certificate-view">
+          <h2>Universidad [Nombre de la U]</h2>
+          <h3>Certificado de participación</h3>
+          <p>Se certifica que</p>
+          <p class="certificate-name" id="cert-name">[Nombre del estudiante]</p>
+          <p>
+            ha participado y completado satisfactoriamente el
+            <strong>Módulo 2: [Nombre del módulo]</strong>, con una dedicación aproximada de 2 horas,
+            desarrollando actividades de reflexión, análisis y creación de contenidos.
+          </p>
+          <p style="margin-top: 0.4rem;">
+            Fecha de emisión: <span id="cert-date"></span>
+          </p>
+          <div class="certificate-footer">
+            <div>
+              <p>__________________________</p>
+              <p>Docente responsable</p>
+            </div>
+            <div class="certificate-logos">
+              <div class="logo-box">Logo U</div>
+              <div class="logo-box">Logo Programa</div>
+            </div>
+            <div>
+              <p class="small">Módulo creado por: <strong>[Nombres del grupo]</strong></p>
+            </div>
+          </div>
+        </div>
+
+        <p class="small" style="margin-top: 0.4rem;">
+          💡 Para imprimir o guardar como PDF: botón “Imprimir / Guardar PDF” o Ctrl+P y selecciona “Guardar como PDF”.
+        </p>
+      </section>
+    </main>
+  </div>
+
+  <footer>
+    Módulo diseñado por el grupo [Nombre del grupo] · Asignatura: [Nombre de la asignatura]
+  </footer>
+
+  <script>
+    // Claves de estado en localStorage
+    const MODULE_KEY = "modulo_completado";
+    const SURVEY_KEY = "encuesta_completada";
+
+    const state = {
+      moduleCompleted: localStorage.getItem(MODULE_KEY) === "1",
+      surveyCompleted: localStorage.getItem(SURVEY_KEY) === "1",
+    };
+
+    // Elementos de navegación y páginas
+    const navItems = document.querySelectorAll(".nav-item");
+    const pages = document.querySelectorAll(".page");
+    const navEncuesta = document.getElementById("nav-encuesta");
+    const navCert = document.getElementById("nav-certificado");
+
+    // Botones y elementos para módulo completado
+    const chkSub1 = document.getElementById("chk-sub1");
+    const chkSub2 = document.getElementById("chk-sub2");
+    const chkEnt = document.getElementById("chk-entrevistas");
+    const chkAct = document.getElementById("chk-act");
+    const btnModuloCompleto = document.getElementById("btn-modulo-completo");
+    const moduloMsg = document.getElementById("modulo-msg");
+
+    // Encuesta
+    const btnEncuesta = document.getElementById("btn-enviar-encuesta");
+    const encuestaMsg = document.getElementById("encuesta-msg");
+
+    // Sugerencias
+    const sugerenciasText = document.getElementById("sugerencias-text");
+    const btnSugerencias = document.getElementById("btn-sugerencias");
+    const SUG_KEY = "modulo_sugerencias";
+
+    // Certificado
+    const btnCert = document.getElementById("btn-certificado");
+    const btnDescargarCert = document.getElementById("btn-descargar-cert");
+    const certNameSpan = document.getElementById("cert-name");
+    const certDateSpan = document.getElementById("cert-date");
+    const nombreInput = document.getElementById("nombre-certificado");
+    const certLockedMsg = document.getElementById("cert-locked-msg");
+
+    // Mini-quiz
+    const btnQuiz = document.getElementById("btn-quiz");
+    const quizResult = document.getElementById("quiz-result");
+
+    // Actividad completar frase
+    const btnFrase = document.getElementById("btn-frase");
+    const fraseInput = document.getElementById("comp-frase");
+    const fraseResult = document.getElementById("frase-result");
+
+    // Navegación entre secciones (con bloqueo)
+    navItems.forEach((btn) => {
+      btn.addEventListener("click", () => {
+        if (btn.classList.contains("locked")) {
+          if (btn === navEncuesta && !state.moduleCompleted) {
+            alert("Primero completa el módulo (lista de verificación en Actividades creativas) para acceder a la encuesta.");
+          } else if (btn === navCert && !state.surveyCompleted) {
+            alert("Primero debes completar el módulo y enviar la encuesta de satisfacción para acceder al certificado.");
+          }
+          return;
+        }
+        const target = btn.getAttribute("data-target");
+        navItems.forEach((b) => b.classList.remove("active"));
+        btn.classList.add("active");
+        pages.forEach((page) => {
+          page.classList.toggle("active", page.id === target);
+        });
+      });
+    });
+
+    // Actualizar bloqueo/estado visual de encuesta y certificado
+    function updateLocks() {
+      if (navEncuesta) {
+        if (state.moduleCompleted) {
+          navEncuesta.classList.remove("locked");
+        } else {
+          navEncuesta.classList.add("locked");
+        }
+      }
+      if (navCert) {
+        if (state.surveyCompleted) {
+          navCert.classList.remove("locked");
+        } else {
+          navCert.classList.add("locked");
+        }
+      }
+
+      if (btnCert && nombreInput && btnDescargarCert && certLockedMsg) {
+        if (state.surveyCompleted) {
+          btnCert.disabled = false;
+          btnDescargarCert.disabled = false;
+          nombreInput.disabled = false;
+          certLockedMsg.style.display = "none";
+        } else {
+          btnCert.disabled = true;
+          btnDescargarCert.disabled = true;
+          nombreInput.disabled = true;
+          certLockedMsg.style.display = "inline-block";
+        }
+      }
+
+      if (moduloMsg) {
+        if (state.moduleCompleted) {
+          moduloMsg.textContent =
+            "✅ Módulo marcado como finalizado. Ya puedes acceder a la encuesta de satisfacción.";
+          moduloMsg.style.color = "#4ade80";
+        } else {
+          moduloMsg.textContent =
+            "Cuando marques todas las casillas y confirmes, se desbloqueará la encuesta de satisfacción.";
+          moduloMsg.style.color = "#9ca3af";
+        }
+      }
+
+      if (encuestaMsg) {
+        if (state.surveyCompleted) {
+          encuestaMsg.textContent =
+            "✅ Encuesta registrada en este dispositivo. El certificado ya está desbloqueado.";
+        }
+      }
+    }
+
+    // Estado inicial de fecha del certificado
+    function formatFechaHoy() {
+      const hoy = new Date();
+      const opciones = { day: "numeric", month: "long", year: "numeric" };
+      return hoy.toLocaleDateString("es-CO", opciones);
+    }
+    if (certDateSpan) {
+      certDateSpan.textContent = formatFechaHoy();
+    }
+
+    // Mini-quiz: respuesta correcta = "b"
+    if (btnQuiz) {
+      btnQuiz.addEventListener("click", () => {
+        const selected = document.querySelector('input[name="q1"]:checked');
+        if (!selected) {
+          quizResult.textContent = "Primero selecciona una opción.";
+          quizResult.className = "quiz-result bad";
+          return;
+        }
+        if (selected.value === "b") {
+          quizResult.textContent = "✅ Correcto: el reto central es articular teoría y práctica.";
+          quizResult.className = "quiz-result ok";
+        } else {
+          quizResult.textContent =
+            "❌ No es la opción más precisa. Escucha de nuevo el podcast y revisa qué se plantea como reto central.";
+          quizResult.className = "quiz-result bad";
+        }
+      });
+    }
+
+    // Actividad de completar frase simple
+    if (btnFrase) {
+      btnFrase.addEventListener("click", () => {
+        const valor = (fraseInput.value || "").trim().toLowerCase();
+        if (!valor) {
+          fraseResult.textContent = "Escribe una palabra (campo, ciudad u otra que consideres).";
+          fraseResult.className = "quiz-result bad";
+          return;
+        }
+        fraseResult.textContent =
+          "🎯 Buena elección. Ahora justifica en tu cuaderno por qué elegiste \"" +
+          valor +
+          "\" y qué retos específicos identificas.";
+        fraseResult.className = "quiz-result ok";
+      });
+    }
+
+    // Guardar sugerencias en localStorage
+    if (sugerenciasText) {
+      const saved = localStorage.getItem(SUG_KEY);
+      if (saved) sugerenciasText.value = saved;
+
+      if (btnSugerencias) {
+        btnSugerencias.addEventListener("click", () => {
+          localStorage.setItem(SUG_KEY, sugerenciasText.value);
+          btnSugerencias.textContent = "✔ Guardado en este equipo";
+          setTimeout(() => {
+            btnSugerencias.textContent = "Guardar en este equipo";
+          }, 2000);
+        });
+      }
+    }
+
+    // Marcar módulo como completado
+    if (btnModuloCompleto) {
+      btnModuloCompleto.addEventListener("click", () => {
+        const allChecked =
+          chkSub1?.checked && chkSub2?.checked && chkEnt?.checked && chkAct?.checked;
+        if (!allChecked) {
+          moduloMsg.textContent =
+            "⚠️ Aún faltan partes por marcar como realizadas. Revisa la lista de verificación.";
+          moduloMsg.style.color = "#f97373";
+          return;
+        }
+        state.moduleCompleted = true;
+        localStorage.setItem(MODULE_KEY, "1");
+        updateLocks();
+      });
+    }
+
+    // Enviar encuesta y desbloquear certificado
+    if (btnEncuesta) {
+      btnEncuesta.addEventListener("click", () => {
+        if (!state.moduleCompleted) {
+          alert("Primero marca el módulo como finalizado en la sección de Actividades creativas.");
+          return;
+        }
+
+        const s1 = document.querySelector('input[name="s1"]:checked');
+        const s2 = document.querySelector('input[name="s2"]:checked');
+        const s3 = document.querySelector('input[name="s3"]:checked');
+
+        if (!s1 || !s2 || !s3) {
+          alert("Por favor responde todos los ítems de la encuesta antes de enviarla.");
+          return;
+        }
+
+        state.surveyCompleted = true;
+        localStorage.setItem(SURVEY_KEY, "1");
+        encuestaMsg.textContent =
+          "✅ ¡Gracias! Tu encuesta quedó registrada en este dispositivo. El certificado ya está desbloqueado.";
+        updateLocks();
+      });
+    }
+
+    // Certificado: poner nombre y habilitar impresión
+    if (btnCert && certNameSpan && nombreInput) {
+      btnCert.addEventListener("click", () => {
+        if (!state.surveyCompleted) {
+          alert("Primero debes completar la encuesta de satisfacción.");
+          return;
+        }
+        const nombre = (nombreInput.value || "").trim();
+        certNameSpan.textContent = nombre || "[Nombre del estudiante]";
+      });
+    }
+
+    if (btnDescargarCert) {
+      btnDescargarCert.addEventListener("click", () => {
+        if (!state.surveyCompleted) {
+          alert("Primero debes completar la encuesta de satisfacción.");
+          return;
+        }
+        window.print();
+      });
+    }
+
+    // Al cargar la página, aplicar bloqueos iniciales
+    updateLocks();
+  </script>
+</body>
+</html>
