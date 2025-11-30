@@ -549,6 +549,45 @@
         grid-template-columns: minmax(0, 1fr);
       }
     }
+
+    /* --- Ajustes generales de iframes --- */
+    .media-box {
+      width: 100%;
+      overflow: hidden;
+      border-radius: 0.8rem;
+      border: 1px solid #1f2937;
+      background: #020617;
+      margin-top: 10px;
+    }
+    
+    /* PDF y Educaplay - altura grande */
+    .media-box.tall iframe {
+      width: 100%;
+      height: 900px;  /* antes 750px */
+      border: 0;
+      display: block;
+    }
+    
+    /* Videos - altura media-grande */
+    .media-box.video iframe {
+      width: 100%;
+      height: 500px;  /* antes 450px */
+      border: 0;
+      display: block;
+    }
+    
+    /* Forzar PDFs a ajustar tamaño */
+    .media-box.tall iframe html, 
+    .media-box.tall iframe body {
+      height: 100% !important;
+    }
+    
+    /* Evita que la tarjeta limite altura */
+    .card {
+      overflow: visible !important;
+    }
+
+  
   </style>
 </head>
 <body>
@@ -690,6 +729,14 @@
       
       </section>
 
+
+
+
+
+
+
+
+
       <!-- SUBTEMA 5 -->
       <section class="page" id="subtema1">
       
@@ -718,7 +765,6 @@
             <iframe
               src="https://www.youtube.com/embed/5qap5aO4i9A"
               title="Video introductorio"
-              frameborder="0"
               allowfullscreen>
             </iframe>
           </div>
@@ -728,8 +774,8 @@
         <div class="card">
           <h3>Diapositivas: Medios tradicionales y digitales</h3>
           <p class="muted">
-            En esta presentación encontrarás los conceptos clave sobre medios de comunicación tradicionales
-            y digitales, así como ejemplos de programas y tipos de audiencias.
+            Aquí encontrarás los conceptos clave sobre medios tradicionales y digitales,
+            programas y tipos de audiencias.
           </p>
       
           <div class="media-box tall">
@@ -748,8 +794,7 @@
         <div class="card">
           <h3>Historieta: El superpoder de la comunicación</h3>
           <p class="muted">
-            Esta historieta ilustra el <strong>superpoder de la comunicación</strong> y cómo los mensajes
-            pueden transformar contextos y relaciones entre las personas.
+            Esta historieta muestra cómo la comunicación transforma relaciones e impacta en la sociedad.
           </p>
       
           <div class="media-box tall">
@@ -760,61 +805,55 @@
           </div>
       
           <p class="small badge-soft">
-            💬 Después de leerla, reflexiona: ¿qué personaje representa mejor tu estilo de comunicación?
+            💬 ¿Qué personaje representa mejor tu estilo de comunicación?
           </p>
         </div>
       
-        <!-- EVALUACIÓN (QUIZ EDUCAPLAY) -->
+        <!-- QUIZ EDUCAPLAY -->
         <div class="card">
           <h3>Evaluación: Quiz sobre medios y escuela</h3>
           <p class="muted">
-            Responde el siguiente quiz para evaluar cuánto comprendiste sobre medios,
-            programas y sus audiencias.
+            Responde este quiz para evaluar tu aprendizaje.
           </p>
       
           <div class="media-box tall">
             <iframe
               src="https://es.educaplay.com/recursos-educativos/26928214-quiz_medios_y_escuela.html"
-              title="Quiz Medios y Escuela">
+              title="Quiz medios y escuela">
             </iframe>
           </div>
       
-          <p class="small badge-soft">
-            ✅ Registra tu resultado como evidencia.
-          </p>
+          <p class="small badge-soft">✅ Guarda tu resultado como evidencia.</p>
         </div>
       
-        <!-- JUEGO DE MEMORIA (EDUCAPLAY) -->
+        <!-- JUEGO DE MEMORIA -->
         <div class="card">
           <h3>Juego de memoria: Medios y escuela</h3>
           <p class="muted">
-            Refuerza lo aprendido con este juego de memoria interactivo.
+            Pon a prueba tu memoria relacionando conceptos clave.
           </p>
       
           <div class="media-box tall">
             <iframe
               src="https://es.educaplay.com/recursos-educativos/26926475-memoria_medios_y_escuela.html"
-              title="Juego de memoria Medios y Escuela">
+              title="Juego de memoria">
             </iframe>
           </div>
       
-          <p class="small badge-soft">
-            🎮 Intenta completarlo sin errores.
-          </p>
+          <p class="small badge-soft">🎮 Intenta lograr el menor tiempo.</p>
         </div>
       
         <!-- VIDEO COMPLEMENTARIO -->
         <div class="card">
-          <h3>Video complementario de la unidad</h3>
+          <h3>Video complementario</h3>
           <p class="muted">
-            Este video amplía los conceptos del subtema sobre medios, audiencias y comunicación.
+            Este video amplía los conceptos trabajados en este subtema.
           </p>
       
           <div class="media-box video">
             <iframe
               src="https://www.youtube.com/embed/g6V9dOo8u1I"
               title="Video complementario"
-              frameborder="0"
               allowfullscreen>
             </iframe>
           </div>
@@ -824,20 +863,19 @@
         <div class="card">
           <h3>Video de cierre del Subtema 5</h3>
           <p class="muted">
-            Para finalizar este subtema, te invitamos a ver este video donde se recogen las ideas principales.
+            Este video recoge las ideas principales del subtema.
           </p>
       
           <div class="media-box video">
             <iframe
               src="https://www.youtube.com/embed/WFZs98i30wU"
-              title="Video de cierre del Subtema 5"
-              frameborder="0"
+              title="Video final Subtema 5"
               allowfullscreen>
             </iframe>
           </div>
       
           <p class="small">
-            👉 Reflexiona: ¿qué medio influye más en tu vida y por qué?
+            👉 ¿Qué medio influye más en tu vida y por qué?
           </p>
         </div>
       
@@ -1452,6 +1490,7 @@
   </script>
 </body>
 </html>
+
 
 
 
