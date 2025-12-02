@@ -486,49 +486,60 @@
 </head>
 <body>
 <header>
-  <div style="display:flex; align-items:center; gap:15px; width:100%;">  
 
-    <!-- BLOQUE DE LOGOS - EN FILA, TAMAÑO REDUCIDO -->
-    <div style="display:flex; align-items:center; gap:8px; flex-wrap:nowrap;">
-      <img src="Unipamplona.png" 
-           alt="Unipamplona" 
-           style="height:50px; width:auto;">
-      <img src="Acreditación internacional.png" 
-           alt="Acreditación internacional"
-           style="height:50px; width:auto;">
-      <img src="Acreditación nacional.png" 
-           alt="Acreditación nacional"
-           style="height:50px; width:auto;">
-      <img src="Comunicación social.png" 
-           alt="Comunicación Social"
-           style="height:50px; width:auto;">
-      <img src="Logo.png" 
-           alt="Logo Prisma"
-           style="height:50px; width:auto;">
+  <!-- CONTENEDOR PRINCIPAL -->
+  <div style="display:flex; align-items:center; gap:20px; width:100%;">
+
+    <!-- BLOQUE DE LOGOS EN DOS FILAS -->
+    <div style="display:flex; flex-direction:column; gap:4px;">
+      
+      <!-- FILA 1 -->
+      <div style="display:flex; gap:6px;">
+        <img src="Unipamplona.png" alt="Unipamplona"
+             style="height:40px; width:auto;">
+        <img src="Acreditación internacional.png" alt="Acreditación internacional"
+             style="height:40px; width:auto;">
+        <img src="Acreditación nacional.png" alt="Acreditación nacional"
+             style="height:40px; width:auto;">
+      </div>
+
+      <!-- FILA 2 -->
+      <div style="display:flex; gap:6px;">
+        <img src="Comunicación social.png" alt="Comunicación social"
+             style="height:40px; width:auto;">
+        <img src="Logo.png" alt="Logo Prisma"
+             style="height:40px; width:auto;">
+      </div>
+
     </div>
 
-    <!-- CONTENIDO DEL TÍTULO -->
-    <div style="flex:1;">
-      <h1>Módulo Interactivo: <strong>Educomunicativo</strong></h1>
+    <!-- TEXTO DEL MÓDULO (NO SE MUEVE, NO CRECE, NO ROMPE NADA) -->
+    <div style="flex:1; min-width:0;">
+      <h1 style="white-space:normal;">Módulo Interactivo: <strong>Educomunicativo</strong></h1>
+
       <small>
-        Universidad de Pamplona · Facultad de Artes y Humanidades · Programa de Comunicación Social · 
+        Universidad de Pamplona · Facultad de Artes y Humanidades · Programa de Comunicación Social ·
         Asignatura de Comunicación y Educación I · Docente: María Esperanza Rodríguez Suárez<br />
-        <span class="badge">
+
+        <span class="badge" style="margin-top:4px; display:inline-block;">
           <span>★</span> 
-          Módulo creado por el grupo: Prisma UniPamplona: 
-          Lisbeth Arismendi, Fernanda Urquijos, Yurley Florez, 
+          Módulo creado por el grupo: Prisma UniPamplona:
+          Lisbeth Arismendi, Fernanda Urquijos, Yurley Florez,
           Laura Palacios y Cindy Manzano
         </span>
       </small>
     </div>
+
   </div>
 
-  <!-- BADGE INFERIOR -->
+  <!-- BADGE DEBAJO, COMO YA LO TENÍAS -->
   <div class="badge" style="margin-top:8px;">
     <span>🎓</span>
     <span>Módulo 2: Modelos de Educación y Experiencias Educomunicativas</span>
   </div>
+
 </header>
+
   
   <div class="layout">
     <nav>
@@ -612,7 +623,7 @@
             </p>
             <div class="media-box video">
               <iframe 
-                src="https://www.youtube.com/embed/54mFMcl38dI"
+                src="https://youtu.be/wHulC9SeYjo?feature=shared"
                 title="Video introductorio"
                 allowfullscreen>
               </iframe>
@@ -643,7 +654,7 @@
           </p>
           <div class="media-box video">
             <iframe
-              src="https://www.youtube.com/embed/5qap5aO4i9A"
+              src="https://youtu.be/ujR5N5kyaY0?feature=shared"
               title="Video introductorio"
               allowfullscreen>
             </iframe>
@@ -732,7 +743,7 @@
           </p>
           <div class="media-box video">
             <iframe
-              src="https://www.youtube.com/embed/WFZs98i30wU"
+              src="https://youtu.be/qcBBZXKzQ-E?feature=shared"
               title="Video final Subtema 5"
               allowfullscreen>
             </iframe>
@@ -802,7 +813,7 @@
           </p>
           <div class="media-box video">
             <iframe
-              src="https://www.youtube.com/embed/ESANdHMg7Nc"
+              src="https://youtu.be/FemnsuTwCeg?feature=shared"
               title="Video de bienvenida Subtema 6"
               allowfullscreen>
             </iframe>
@@ -930,7 +941,7 @@
           </p>
           <div class="media-box video">
             <iframe
-              src="https://www.youtube.com/embed/CIjaOaep3KY"
+              src="https://youtu.be/LWGJDVMrdCY?feature=shared"
               title="Video final Subtema 6"
               allowfullscreen>
             </iframe>
@@ -1397,6 +1408,7 @@
   </script>
 </body>
 </html>
+
 
 
 
